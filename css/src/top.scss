@@ -1,5 +1,11 @@
-Body {
-	Main {
-		Padding: 1em;
+Main {
+	padding: 1em;
+}
+
+Article {
+	margin: 1em 0;
+
+	&:first-child {
+		margin: 0;
 	}
 }
