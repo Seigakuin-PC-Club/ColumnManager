@@ -1,2 +1,6 @@
+# Sass files
 .sass-cache/
 *.css.map
+
+# Npm files
+node_modules/
