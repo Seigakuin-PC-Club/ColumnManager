@@ -1,0 +1,15 @@
+@charset "UTF-8";
+
+
+
+Main {
+	padding: 1em;
+}
+
+Article {
+	margin: 2em 0;
+
+	&:first-child {
+		margin: 0;
+	}
+}

@@ -1,0 +1,12 @@
+Main {
+  padding: 1em;
+}
+
+Article {
+  margin: 2em 0;
+}
+Article:first-child {
+  margin: 0;
+}
+
+/*# sourceMappingURL=top.css.map */
