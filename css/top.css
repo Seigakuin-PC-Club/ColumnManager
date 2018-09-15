@@ -1,5 +1,12 @@
+Body {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
 Main {
   padding: 1em;
+  flex: 1 0 auto;
 }
 
 Article {
@@ -7,6 +14,10 @@ Article {
 }
 Article:first-child {
   margin: 0;
+}
+
+Footer .footer-copyright .author {
+  color: #90CAF9;
 }
 
 /*# sourceMappingURL=top.css.map */

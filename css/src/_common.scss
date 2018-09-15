@@ -1,0 +1,32 @@
+@charset "UTF-8";
+
+@import './../../libs/materialize/color-variables';
+
+
+
+Body {
+	display: flex;
+	flex-direction: column;
+	min-height: 100vh;
+}
+
+Main {
+	padding: 1em;
+	flex: 1 0 auto;
+}
+
+Article {
+	margin: 2em 0;
+
+	&:first-child {
+		margin: 0;
+	}
+}
+
+Footer {
+	.footer-copyright {
+		.author {
+			color: color("blue", "lighten-3");
+		}
+	}
+}

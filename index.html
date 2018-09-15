@@ -3,20 +3,21 @@
 <HTML>
 	<Head>
 		<Meta Charset = "UTF-8" />
+		<Meta Name = "Viewport" Content = "Width=Device-Width, Initial-Scale=1, User-Scalable=No" />
 		<Title>Column Manager | 小さな力を、大きな力に。</Title>
 
-		<Link Rel = "StyleSheet" Href = "./libs/materialize.min.css" />
+		<Link Rel = "StyleSheet" Href = "./libs/materialize/materialize.min.css" />
 		<Link Rel = "StyleSheet" Href = "./libs/material-icons/material-icons.css" />
 		<Link Rel = "StyleSheet" Href = "./css/top.css" />
 
-		<Script Src = "./libs/materialize.min.js"></Script>
+		<Script Src = "./libs/materialize/materialize.min.js"></Script>
 	</Head>
 	
 	<Body>
 		<Header Class = "navbar-fixed">
 			<Nav>
 				<Div Class = "nav-wrapper">
-					<A Href = "./" Class = "brand-logo center">Column Manager</A>
+					<A Href = "./" Class = "brand-logo center truncate">Column Manager</A>
 				</Div>
 			</Nav>
 		</Header>
@@ -32,8 +33,24 @@
 			</Article>
 		</Main>
 
-		<Footer>
-			
+		<Footer Class = "page-footer">
+			<Div Class = "container">
+				<Div Class = "row">
+					<Div Class = "col s12 l6">
+						<H5>Column Manager</H5>
+						<UL>
+							<Li><A Class = "grey-text text-lighten-3" Href = "./terms">利用規約</A></Li>
+							<Li><A Class = "grey-text text-lighten-3" Href = "./policy">プライバシーポリシー</A></Li>
+						</UL>
+					</Div>
+				</Div>
+			</Div>
+
+			<Div Class = "footer-copyright">
+				<Div Class = "container">
+					&copy; 2018 <Span Class = "author">Seigakuin-PC-Club</Span> & <A Class = "author" Href = "https://github.com/GenbuHase" Target = "_blank">Genbu Hase</A> All Rights Reserved.
+				</Div>
+			</Div>
 		</Footer>
 	</Body>
 </HTML>
