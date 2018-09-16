@@ -20,7 +20,7 @@ const CLIENT_OPTIONS = {
 
 const SIGNIN_OPTIONS = {
 	scope: "email openid",
-	redirect_uri: `${location.host === "seigakuin-pc-club.github.io" ? `${location.origin}/ColumnManager` : location.origin}/login`,
+	redirect_uri: location.host === "seigakuin-pc-club.github.io" ? `${location.origin}/ColumnManager` : location.origin,
 
 	ux_mode: "popup"
 };
@@ -50,8 +50,6 @@ window.addEventListener("DOMContentLoaded", () => {
 			gapi.auth2.getAuthInstance().isSignedIn.listen(state => {
 				for (const isSignedInState of isSignedInStates) isSignedInState.textContent = !state ? "Sign in" : "Sign out";
 			});
-		}).then(() => {
-			console.log("Complated");
 		});
 	});
 

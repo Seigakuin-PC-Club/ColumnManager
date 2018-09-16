@@ -28,4 +28,8 @@ Article:first-child {
   margin: 0;
 }
 
+.btn--sign-in-out:not([Data-is-signed-in]) {
+  display: none;
+}
+
 /*# sourceMappingURL=history.css.map */

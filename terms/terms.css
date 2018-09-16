@@ -28,6 +28,10 @@ Article:first-child {
   margin: 0;
 }
 
+.btn--sign-in-out:not([Data-is-signed-in]) {
+  display: none;
+}
+
 Article Section {
   margin: 1em 0 2em 0;
 }
