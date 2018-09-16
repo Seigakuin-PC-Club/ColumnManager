@@ -1,0 +1,31 @@
+Body {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+Header .nav-content .nav-wrapper {
+  display: flex;
+  align-items: center;
+}
+
+Footer > .container UL Li A {
+  color: #eeeeee;
+}
+Footer .footer-copyright .author {
+  color: #90CAF9;
+}
+
+Main {
+  padding: 1em;
+  flex: 1 0 auto;
+}
+
+Article {
+  margin: 2em 0;
+}
+Article:first-child {
+  margin: 0;
+}
+
+/*# sourceMappingURL=history.css.map */
