@@ -4,6 +4,18 @@ Body {
   min-height: 100vh;
 }
 
+Header .nav-content .nav-wrapper {
+  display: flex;
+  align-items: center;
+}
+
+Footer > .container UL Li A {
+  color: #eeeeee;
+}
+Footer .footer-copyright .author {
+  color: #90CAF9;
+}
+
 Main {
   padding: 1em;
   flex: 1 0 auto;
@@ -14,10 +26,6 @@ Article {
 }
 Article:first-child {
   margin: 0;
-}
-
-Footer .footer-copyright .author {
-  color: #90CAF9;
 }
 
 /*# sourceMappingURL=top.css.map */

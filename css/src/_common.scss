@@ -1,6 +1,6 @@
 @charset "UTF-8";
 
-@import './../../libs/materialize/color-variables';
+@import './../../libs/materialize/_color-variables.scss';
 
 
 
@@ -8,6 +8,29 @@ Body {
 	display: flex;
 	flex-direction: column;
 	min-height: 100vh;
+}
+
+Header {
+	.nav-content {
+		.nav-wrapper {
+			display: flex;
+			align-items: center;
+		}
+	}
+}
+
+Footer {
+	> .container {
+		UL Li A {
+			color: color("grey", "lighten-3");
+		}
+	}
+
+	.footer-copyright {
+		.author {
+			color: color("blue", "lighten-3");
+		}
+	}
 }
 
 Main {
@@ -20,13 +43,5 @@ Article {
 
 	&:first-child {
 		margin: 0;
-	}
-}
-
-Footer {
-	.footer-copyright {
-		.author {
-			color: color("blue", "lighten-3");
-		}
 	}
 }
