@@ -28,18 +28,46 @@ const SIGNIN_OPTIONS = {
 
 
 window.addEventListener("DOMContentLoaded", () => {
-	if (gapi.client) return;
+	// ページ内要素
 
+	const signInOutBtns = document.querySelectorAll("A.btn--sign-in-out");
+	const isSignedInStates = document.querySelectorAll(".user-state--is-signed-in");
+
+
+
+	// Google APIとの連携
+	
 	gapi.load("client:auth2", () => {
 		Promise.all([
 			gapi.client.init(CLIENT_OPTIONS).catch(error => { throw error }),
 			gapi.auth2.getAuthInstance()
 		]).then(() => {
-			//return gapi.auth2.getAuthInstance().signIn(SIGNIN_OPTIONS);
+			const isSignedIn = gapi.auth2.getAuthInstance().isSignedIn.get();
+
+			for (const isSignedInState of isSignedInStates) isSignedInState.textContent = !isSignedIn ? "Sign in" : "Sign out";
+			for (const signInOutBtn of signInOutBtns) signInOutBtn.dataset.isSignedIn = isSignedIn;
+
+			gapi.auth2.getAuthInstance().isSignedIn.listen(state => {
+				for (const isSignedInState of isSignedInStates) isSignedInState.textContent = !state ? "Sign in" : "Sign out";
+			});
 		}).then(() => {
 			console.log("Complated");
 		});
 	});
+
+
+
+	// イベントの登録
+
+	for (const signInOutBtn of signInOutBtns) {
+		signInOutBtn.addEventListener("click", () => {
+			if (signInOutBtn.dataset.isSignedIn === "true") {
+				gapi.auth2.getAuthInstance().signOut().then(() => location.reload());
+			} else {
+				gapi.auth2.getAuthInstance().signIn(SIGNIN_OPTIONS);
+			}
+		});
+	}
 });
 
 
