@@ -7,6 +7,7 @@ const userPhotoStates = document.querySelectorAll(".user-state--photo");
 const userNameStates = document.querySelectorAll(".user-state--name");
 const userEmailStates = document.querySelectorAll(".user-state--email");
 
+const scriptLoader = document.querySelector('Script[Src$="common.js"]');
 const drawer = document.querySelector("#drawer");
 
 
@@ -28,10 +29,14 @@ class CMUtil {
 		user = auth.currentUser.get();
 	}
 
-	static onAuthorizedHandler () {
+	static onAuthorizedHandler (isSignedIn) {
+		if (scriptLoader.dataset.authRequired !== undefined && !isSignedIn) return location.href = ROOT_DIR;
+
 		for (const userStatePanel of userStatePanels) {
 			for (const part of userStatePanel.querySelectorAll(".user-view")) part.classList.toggle("hide");
 		}
+
+		this.updateSignedInState(isSignedIn);
 	}
 
 	static updateSignedInState (isSignedIn) {
@@ -112,10 +117,7 @@ window.addEventListener("DOMContentLoaded", () => {
 			CMUtil.initShorthands();
 
 			const isSignedIn = auth.isSignedIn.get();
-
-			CMUtil.onAuthorizedHandler();
-			CMUtil.updateSignedInState(isSignedIn);
-
+			CMUtil.onAuthorizedHandler(isSignedIn);
 			auth.isSignedIn.listen(state => CMUtil.updateSignedInState(state));
 		});
 	});
