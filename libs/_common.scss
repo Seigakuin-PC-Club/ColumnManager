@@ -25,7 +25,7 @@ Footer {
 	.nav-extended { width: calc(100% - #{$drawer-width}) }
 }
 
-Header.navbar-fixed {
+Header.navbar-fixed:not(.error-header) {
 	height: 56px * 2;
 
 	@media only screen and (min-width: 601px) {

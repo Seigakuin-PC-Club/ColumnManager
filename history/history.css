@@ -22,20 +22,20 @@ Footer .nav-extended {
   width: calc(100% - 300px);
 }
 
-Header.navbar-fixed {
+Header.navbar-fixed:not(.error-header) {
   height: 112px;
 }
 @media only screen and (min-width: 601px) {
-  Header.navbar-fixed {
+  Header.navbar-fixed:not(.error-header) {
     height: 128px;
   }
 }
 @media only screen and (max-width: 992px) {
-  Header.navbar-fixed > Nav.nav-extended {
+  Header.navbar-fixed:not(.error-header) > Nav.nav-extended {
     width: 100%;
   }
 }
-Header.navbar-fixed .nav-content .nav-wrapper {
+Header.navbar-fixed:not(.error-header) .nav-content .nav-wrapper {
   display: flex;
   align-items: center;
 }

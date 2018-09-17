@@ -81,7 +81,7 @@ const CLIENT_OPTIONS = {
 	scope: "https://www.googleapis.com/auth/drive",
 	discoveryDocs: ["https://www.googleapis.com/discovery/v1/apis/drive/v3/rest"],
 
-	hosted_domain: "seig-boys.jp",
+	// hosted_domain: "seig-boys.jp",
 };
 
 const SIGNIN_OPTIONS = {

@@ -67,8 +67,10 @@ Article:first-child {
   display: none;
 }
 
-Article Section {
-  margin: 1em 0 2em 0;
+Header,
+Main,
+Footer {
+  margin-left: 0;
 }
 
-/*# sourceMappingURL=terms.css.map */
+/*# sourceMappingURL=error.css.map */
