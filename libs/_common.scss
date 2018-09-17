@@ -86,6 +86,20 @@ Article {
 	}
 }
 
+.collapsible {
+	> Li {
+		&.active {
+			.collapsible-header i.material-icons::before {
+				content: "arrow_drop_up";
+			}
+		}
+
+		.collapsible-header i.material-icons::before {
+			content: "arrow_drop_down";
+		}
+	}
+}
+
 
 
 // パーツ要素

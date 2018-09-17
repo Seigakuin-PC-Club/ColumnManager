@@ -67,6 +67,9 @@ class CMUtil {
 window.addEventListener("DOMContentLoaded", () => {
 	const sidenavs = document.querySelectorAll(".sidenav");
 	for (const sidenav of sidenavs) M.Sidenav.init(sidenav);
+
+	const collapsibles = document.querySelectorAll(".collapsible");
+	for (const collapsible of collapsibles) M.Collapsible.init(collapsible);
 });
 
 
@@ -81,7 +84,7 @@ const CLIENT_OPTIONS = {
 	scope: "https://www.googleapis.com/auth/drive",
 	discoveryDocs: ["https://www.googleapis.com/discovery/v1/apis/drive/v3/rest"],
 
-	// hosted_domain: "seig-boys.jp",
+	hosted_domain: "seig-boys.jp",
 };
 
 const SIGNIN_OPTIONS = {

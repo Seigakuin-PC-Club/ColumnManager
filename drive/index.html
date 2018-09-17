@@ -4,11 +4,11 @@
 	<Head>
 		<Meta Charset = "UTF-8" />
 		<Meta Name = "Viewport" Content = "Width=Device-Width, Initial-Scale=1, User-Scalable=No" />
-		<Title>Column Managerの歴史 | Column Manager - 小さな力を、大きな力に。</Title>
+		<Title>ドライブ | Column Manager - 小さな力を、大きな力に。</Title>
 
 		<Link Rel = "StyleSheet" Href = "./../libs/materialize/materialize.min.css" />
 		<Link Rel = "StyleSheet" Href = "./../libs/material-icons/material-icons.css" />
-		<Link Rel = "StyleSheet" Href = "./history.css" />
+		<Link Rel = "StyleSheet" Href = "./drive.css" />
 
 		<Script Src = "./../libs/materialize/materialize.min.js"></Script>
 		<Script Src = "https://apis.google.com/js/api.js"></Script>
@@ -36,7 +36,7 @@
 					<Div Class = "nav-wrapper">
 						<Div Class = "col s12">
 							<A Class = "breadcrumb" Href = "./../">Top</A>
-							<A Class = "breadcrumb">Column Managerの歴史</A>
+							<A Class = "breadcrumb">ドライブ</A>
 						</Div>
 					</Div>
 				</Div>
@@ -66,10 +66,20 @@
 			<Div Class = "divider"></Div>
 
 			<Li Class = "hide">
-				<A Href = "./../drive">
-					<I Class = "material-icons left">inbox</I>
-					自分のコラムを管理する
-				</A>
+				<UL Class = "collapsible collapsible-accordion">
+					<Li Class = "active">
+						<A Class = "collapsible-header">
+							<I Class = "material-icons"></I>
+							自分のコラムを管理する
+						</A>
+
+						<Div Class = "collapsible-body">
+							<UL>
+								<Li><A Href = "./upload"><I Class = "material-icons">cloud_upload</I>コラムをアップロードする</A></Li>
+							</UL>
+						</Div>
+					</Li>
+				</UL>
 			</Li>
 
 			<Li Class = "hide">
@@ -82,19 +92,7 @@
 
 		<Main>
 			<Article>
-				わたしが開発を決意したのは、2018年9月14日のこと。<Br />
-				とある授業の時間中に聞こえてきたある言葉がきっかけでした。<Br />
-				「あーあ、記事さえあればコラム楽なのになぁ」
-
-				<Br /><Br />
-
-				この一言にみんなが反応していました。<Br />
-				もしかすると、大半の生徒たちが同じ事を思っているのでは？となれば、統括するサービスがあれば、かなり楽になるのでは？
-
-				<Br /><Br />
-
-				そう思い付いた瞬間、既に仕様書を書き始めていました。<Br />
-				こうして、Column Managerが誕生しました。
+				
 			</Article>
 		</Main>
 
@@ -103,7 +101,7 @@
 				<Div Class = "row">
 					<Div Class = "col s12 l6">
 						<UL>
-							<Li><A Href = "./">Column Managerの歴史</A></Li>
+							<Li><A Href = "./../history">Column Managerの歴史</A></Li>
 							<Li><A Href = "./../terms">利用規約</A></Li>
 							<Li><A Href = "./../policy">プライバシーポリシー</A></Li>
 						</UL>

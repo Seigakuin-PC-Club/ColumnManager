@@ -63,6 +63,13 @@ Article:first-child {
   margin: 0;
 }
 
+.collapsible > Li.active .collapsible-header i.material-icons::before {
+  content: "arrow_drop_up";
+}
+.collapsible > Li .collapsible-header i.material-icons::before {
+  content: "arrow_drop_down";
+}
+
 .btn--sign-in-out:not([Data-is-signed-in]) i.material-icons {
   display: none;
 }
