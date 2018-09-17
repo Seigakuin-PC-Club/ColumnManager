@@ -97,6 +97,12 @@ Article {
 		.collapsible-header i.material-icons::before {
 			content: "arrow_drop_down";
 		}
+
+		.collapsible-body {
+			li.active {
+				i.material-icons { color: white }
+			}
+		}
 	}
 }
 

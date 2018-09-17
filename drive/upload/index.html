@@ -4,34 +4,126 @@
 	<Head>
 		<Meta Charset = "UTF-8" />
 		<Meta Name = "Viewport" Content = "Width=Device-Width, Initial-Scale=1, User-Scalable=No" />
-		<Title>コラムアップローダー | Column Manager - 小さな力を、大きな力に。</Title>
+		<Title>アップロード | ドライブ | Column Manager - 小さな力を、大きな力に。</Title>
 
-		<Link Rel = "StyleSheet" Href = "./../libs/materialize/materialize.min.css" />
-		<Link Rel = "StyleSheet" Href = "./../libs/material-icons/material-icons.css" />
-		<Link Rel = "StyleSheet" Href = "./uploader.css" />
+		<Link Rel = "StyleSheet" Href = "./../../libs/materialize/materialize.min.css" />
+		<Link Rel = "StyleSheet" Href = "./../../libs/material-icons/material-icons.css" />
+		<Link Rel = "StyleSheet" Href = "./upload.css" />
 
-		<Script Src = "./../libs/materialize/materialize.min.js"></Script>
+		<Script Src = "./../../libs/materialize/materialize.min.js"></Script>
+		<Script Src = "https://apis.google.com/js/api.js"></Script>
+		<Script Src = "./../../libs/common.js" Defer></Script>
 	</Head>
 	
 	<Body>
-		<Header>
+		<Header Class = "navbar-fixed">
 			<Nav Class = "nav-extended">
 				<Div Class = "nav-wrapper">
-					<A Href = "./../" Class = "brand-logo center truncate">Column Manager</A>
+					<A Class = "brand-logo center truncate" Href = "./../../">Column Manager</A>
+
+					<A Class = "sidenav-trigger" Data-Target = "drawer"><I Class = "material-icons">menu</I></A>
+					<UL Class = "right hide-on-med-and-down">
+						<Li>
+							<A Class = "btn--sign-in-out btn--sign-in-out--desktop">
+								<Span Class = "user-state--is-signed-in">Google認証中...</Span>
+								<I Class = "material-icons right">person</I>
+							</A>
+						</Li>
+					</UL>
 				</Div>
 
 				<Div Class = "nav-content container">
 					<Div Class = "nav-wrapper">
 						<Div Class = "col s12">
-							<A Class = "breadcrumb" Href = "./../">Top</A>
-							<A Class = "breadcrumb">コラムアップローダー</A>
+							<A Class = "breadcrumb" Href = "./../../">Top</A>
+							<A Class = "breadcrumb" href = "./../">ドライブ</A>
+							<A Class = "breadcrumb">アップロード</A>
 						</Div>
 					</Div>
 				</Div>
 			</Nav>
 		</Header>
 
+		<UL ID = "drawer" Class = "sidenav sidenav-fixed">
+			<Li Class = "user-state-panel">
+				<Div Class = "user-view hide">
+					<Div Class = "background"></Div>
+
+					<Img Class = "user-state--photo circle" Src = "./../../assets/profile-default.png" />
+					<Span Class = "user-state--name name">ログインされていません</Span>
+					<Span Class = "user-state--email email"></Span>
+				</Div>
+
+				<Div Class = "user-view hide-on-med-and-down">Google認証中です...</Div>
+			</Li>
+
+			<Li Class = "hide-on-large-only">
+				<A Class = "btn--sign-in-out btn--sign-in-out--mobile">
+					<I Class = "material-icons left">person</I>
+					<Span Class = "user-state--is-signed-in">Google認証中です...</Span>
+				</A>
+			</Li>
+
+			<Div Class = "divider"></Div>
+
+			<Li Class = "hide">
+				<UL Class = "collapsible collapsible-accordion">
+					<Li Class = "active">
+						<A Class = "collapsible-header">
+							<I Class = "material-icons"></I>
+							自分のコラムを管理する
+						</A>
+
+						<Div Class = "collapsible-body">
+							<UL>
+								<Li><A Href = "./"><I Class = "material-icons">cloud_upload</I>コラムをアップロードする</A></Li>
+							</UL>
+						</Div>
+					</Li>
+				</UL>
+			</Li>
+
+			<Li Class = "hide">
+				<A Href = "./../../explore">
+					<I Class = "material-icons left">explore</I>
+					みんなのコラムを閲覧する
+				</A>
+			</Li>
+		</UL>
+
 		<Main>
+			<Article>
+				以下のフォームからコラムをアップロードすることが出来ます。
+			</Article>
+
+			<Article>
+				<Form ID = "uploader" Class = "container">
+					<Div Class = "row">
+						<Div Class = "input-field col s12 l6">
+							<Input ID = "uploader-filename" Class = "validate" Type = "Text" />
+							<Label For = "uploader-filename">コラムの名前</Label>
+						</Div>
+
+						<Div Class = "input-field col s12 l6">
+							<Input ID = "uploader-published-at" Class = "datepicker" Type = "Text" />
+							<Label For = "uploader-published-at">コラムの収載日時(不明な場合は空欄)</Label>
+						</Div>
+					</Div>
+
+					<Div Class = "row">
+						<Div Class = "input-field file-field col s12">
+							<Div Class = "btn">
+								<Span>選択</Span>
+								<Input Type = "File" />
+							</Div>
+
+							<Div Class = "file-path-wrapper">
+								<Input Class = "file-path validate" Type = "Text" />
+							</Div>
+						</Div>
+					</Div>
+				</Form>
+			</Article>
 		</Main>
 
 		<Footer Class = "page-footer">
@@ -39,9 +131,9 @@
 				<Div Class = "row">
 					<Div Class = "col s12 l6">
 						<UL>
-							<Li><A Href = "./../history">Column Managerの歴史</A></Li>
-							<Li><A Href = "./../terms">利用規約</A></Li>
-							<Li><A Href = "./../policy">プライバシーポリシー</A></Li>
+							<Li><A Href = "./../../history">Column Managerの歴史</A></Li>
+							<Li><A Href = "./../../terms">利用規約</A></Li>
+							<Li><A Href = "./../../policy">プライバシーポリシー</A></Li>
 						</UL>
 					</Div>
 				</Div>

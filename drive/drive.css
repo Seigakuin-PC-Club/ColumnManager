@@ -69,6 +69,9 @@ Article:first-child {
 .collapsible > Li .collapsible-header i.material-icons::before {
   content: "arrow_drop_down";
 }
+.collapsible > Li .collapsible-body li.active i.material-icons {
+  color: white;
+}
 
 .btn--sign-in-out:not([Data-is-signed-in]) i.material-icons {
   display: none;
