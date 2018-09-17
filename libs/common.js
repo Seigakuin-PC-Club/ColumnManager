@@ -1,3 +1,36 @@
+// ページ内要素定義
+
+const signInOutBtns = document.querySelectorAll("A.btn--sign-in-out");
+const isSignedInStates = document.querySelectorAll(".user-state--is-signed-in");
+const userPhotoStates = document.querySelectorAll(".user-state--photo");
+const userNameStates = document.querySelectorAll(".user-state--name");
+const userEmailStates = document.querySelectorAll(".user-state--email");
+
+
+
+// メソッド定義
+
+class CMUtil {
+	static updateSignedInState (isSignedIn) {
+		for (const isSignedInState of isSignedInStates) isSignedInState.textContent = !isSignedIn ? "Sign in" : "Sign out";
+		for (const signInOutBtn of signInOutBtns) signInOutBtn.dataset.isSignedIn = isSignedIn;
+
+		this.updateUserPanel(isSignedIn ? gapi.auth2.getAuthInstance().currentUser.get() : null);
+	}
+
+	static updateUserPanel (user) {
+		if (!user) return;
+
+		const userInfo = user.getBasicProfile();
+
+		for (const photo of userPhotoStates) photo.src = userInfo.getImageUrl();
+		for (const name of userNameStates) name.textContent = userInfo.getName();
+		for (const email of userEmailStates) email.textContent = userInfo.getEmail();
+	}
+}
+
+
+
 // Materializeの初期化処理
 
 window.addEventListener("DOMContentLoaded", () => {
@@ -30,13 +63,6 @@ const DIR_ID = "1MoMuOrbicOuO7xMtcJ5crk87dW7OuxTM";
 
 
 window.addEventListener("DOMContentLoaded", () => {
-	// ページ内要素
-
-	const signInOutBtns = document.querySelectorAll("A.btn--sign-in-out");
-	const isSignedInStates = document.querySelectorAll(".user-state--is-signed-in");
-
-
-
 	// Google APIとの連携
 	
 	gapi.load("client:auth2", () => {
@@ -45,13 +71,9 @@ window.addEventListener("DOMContentLoaded", () => {
 			gapi.auth2.getAuthInstance()
 		]).then(() => {
 			const isSignedIn = gapi.auth2.getAuthInstance().isSignedIn.get();
-
-			for (const isSignedInState of isSignedInStates) isSignedInState.textContent = !isSignedIn ? "Sign in" : "Sign out";
-			for (const signInOutBtn of signInOutBtns) signInOutBtn.dataset.isSignedIn = isSignedIn;
-
-			gapi.auth2.getAuthInstance().isSignedIn.listen(state => {
-				for (const isSignedInState of isSignedInStates) isSignedInState.textContent = !state ? "Sign in" : "Sign out";
-			});
+			CMUtil.updateSignedInState(isSignedIn);
+			
+			gapi.auth2.getAuthInstance().isSignedIn.listen(state => CMUtil.updateSignedInState(state));
 		});
 	});
 

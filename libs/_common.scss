@@ -4,13 +4,38 @@
 
 
 
+// アウトライン要素
+
 Body {
 	display: flex;
 	flex-direction: column;
 	min-height: 100vh;
 }
 
-Header {
+Header,
+Main,
+Footer {
+	$drawer-width: 300px;
+	margin-left: $drawer-width;
+
+	@media only screen and (max-width: 992px) {
+		margin-left: 0;
+	}
+
+	.nav-extended { width: calc(100% - #{$drawer-width}) }
+}
+
+Header.navbar-fixed {
+	height: 56px * 2;
+
+	@media only screen and (min-width: 601px) {
+		height: 64px * 2;
+	}
+
+	@media only screen and (max-width: 992px) {
+		> Nav.nav-extended { width: 100% }
+	}
+
 	.nav-content {
 		.nav-wrapper {
 			display: flex;
@@ -19,7 +44,23 @@ Header {
 	}
 }
 
-Footer {
+UL.sidenav {
+	.user-view {
+		.user-state--photo {
+			&[Src=""],
+			&:not([Src]) {
+				visibility: hidden;
+			}
+		}
+	}
+}
+
+Main {
+	padding: 1em;
+	flex: 1 0 auto;
+}
+
+Footer.page-footer {
 	> .container {
 		UL Li A {
 			color: color("grey", "lighten-3");
@@ -33,10 +74,9 @@ Footer {
 	}
 }
 
-Main {
-	padding: 1em;
-	flex: 1 0 auto;
-}
+
+
+// コンテンツ要素
 
 Article {
 	margin: 2em 0;
@@ -45,6 +85,10 @@ Article {
 		margin: 0;
 	}
 }
+
+
+
+// パーツ要素
 
 .btn--sign-in-out {
 	&:not([Data-is-signed-in]) {
