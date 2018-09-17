@@ -15,15 +15,17 @@ const CLIENT_OPTIONS = {
 	scope: "https://www.googleapis.com/auth/drive",
 	discoveryDocs: ["https://www.googleapis.com/discovery/v1/apis/drive/v3/rest"],
 
-	hosted_domain: "seig-boys.jp"
+	hosted_domain: "seig-boys.jp",
 };
 
 const SIGNIN_OPTIONS = {
 	scope: "email openid",
 	redirect_uri: location.host === "seigakuin-pc-club.github.io" ? `${location.origin}/ColumnManager` : location.origin,
 
-	ux_mode: "popup"
+	// ux_mode: "popup" | "redirect",
 };
+
+const DIR_ID = "1MoMuOrbicOuO7xMtcJ5crk87dW7OuxTM";
 
 
 
@@ -59,10 +61,15 @@ window.addEventListener("DOMContentLoaded", () => {
 
 	for (const signInOutBtn of signInOutBtns) {
 		signInOutBtn.addEventListener("click", () => {
-			if (signInOutBtn.dataset.isSignedIn === "true") {
-				gapi.auth2.getAuthInstance().signOut().then(() => location.reload());
-			} else {
-				gapi.auth2.getAuthInstance().signIn(SIGNIN_OPTIONS);
+			const isDesktop = signInOutBtn.classList.contains("btn--sign-in-out--desktop");
+
+			switch (signInOutBtn.dataset.isSignedIn) {
+				default:
+					return;
+				case "true":
+					return gapi.auth2.getAuthInstance().signOut().then(() => location.reload());
+				case "false":
+					return gapi.auth2.getAuthInstance().signIn(Object.assign(SIGNIN_OPTIONS, { ux_mode: isDesktop ? "popup" : "redirect" }));
 			}
 		});
 	}

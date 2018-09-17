@@ -48,6 +48,8 @@ Article {
 
 .btn--sign-in-out {
 	&:not([Data-is-signed-in]) {
-		display: none;
+		i.material-icons {
+			display: none;
+		}
 	}
 }
