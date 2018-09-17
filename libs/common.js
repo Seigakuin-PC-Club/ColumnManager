@@ -77,7 +77,7 @@ window.addEventListener("DOMContentLoaded", () => {
 	for (const collapsible of collapsibles) M.Collapsible.init(collapsible);
 
 	const datepickers = document.querySelectorAll(".datepicker");
-	for (const datepicker of datepickers) M.Datepicker.init(datepicker, { format: "yyyy/mm/dd", defaultDate: new Date() });
+	for (const datepicker of datepickers) M.Datepicker.init(datepicker, { format: "yyyy/mm/dd", defaultDate: new Date(), showClearBtn: true });
 });
 
 
