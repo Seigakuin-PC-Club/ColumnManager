@@ -40,7 +40,7 @@ Header.navbar-fixed .nav-content .nav-wrapper {
   align-items: center;
 }
 
-UL.sidenav .user-view .user-state--photo[Src=""], UL.sidenav .user-view .user-state--photo:not([Src]) {
+UL.sidenav .user-state-panel .user-state--photo[Src=""], UL.sidenav .user-state-panel .user-state--photo:not([Src]) {
   visibility: hidden;
 }
 
