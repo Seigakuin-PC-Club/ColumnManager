@@ -38,11 +38,11 @@ class CMUploader {
 	}
 
 	static refreshFilePicker () {
+		if (!templates.loaded) return;
+
 		columnFilename.value = "";
 
-		const refreshedPicker = document.createElement("input");
-		refreshedPicker.id = "uploader-column--file";
-		refreshedPicker.type = "File";
+		const refreshedPicker = templates.createComponent("ColumnFilePicker");
 
 		columnFilePicker.parentNode.insertBefore(refreshedPicker, columnFilePicker);
 		columnFilePicker.remove();
@@ -145,6 +145,7 @@ class CMUploader {
 // 定数定義
 
 const BOUNDARY = "ColumnManager";
+const templates = new TemplateLoader("./../../libs/templates/Uploader.html");
 
 
 
