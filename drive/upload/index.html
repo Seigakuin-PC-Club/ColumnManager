@@ -99,7 +99,7 @@
 
 			<Article>
 				<Form ID = "uploader" Action = "https://www.googleapis.com/upload/drive/v3/files?uploadType=multipart" Method = "POST" Enctype = "multipart/form-data">
-					<Div Class = "row">
+					<Div ID = "uploader-metadata" Class = "row">
 						<Div Class = "input-field col s12 l6">
 							<Input ID = "uploader-filename" Class = "validate" Type = "Text" Required />
 							<Label For = "uploader-filename">コラム記事名</Label>
@@ -111,7 +111,7 @@
 						</Div>
 					</Div>
 
-					<Div Class = "row">
+					<Div ID = "uploader-media" Class = "row">
 						<Div Class = "input-field col s12 l4">
 							<Select ID = "uploader-column-type" Required>
 								<Option Value = "" Disabled Selected>ファイルの種類を選択してください</Option>
@@ -123,12 +123,17 @@
 							<Label>ファイルの種類</Label>
 						</Div>
 
-						<Div Class = "input-field file-field col s12 l6">
-							<Input ID = "uploader-column" Type = "File" />
+						<Div Class = "input-field file-field col s12 l6 hide">
+							<Input ID = "uploader-column--file" Type = "File" />
 
 							<Div Class = "file-path-wrapper">
-								<Input Class = "file-path validate" Type = "Text" Placeholder = "コラムを選択してください" Required />
+								<Input Class = "file-path validate invalid" Type = "Text" Placeholder = "コラムを選択してください" Required />
 							</Div>
+						</Div>
+
+						<Div Class = "input-field col s12 l6 hide">
+							<Textarea ID = "uploader-column--text" Class = "materialize-textarea validate invalid" Required></Textarea>
+							<Label For = "uploader-column--text">コラムの本文を入力してください</Label>
 						</Div>
 
 						<Button Class = "input-field btn waves-effect waves-light col s6 l2" Type = "Submit">
