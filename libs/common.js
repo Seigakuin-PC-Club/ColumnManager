@@ -137,7 +137,7 @@ window.addEventListener("DOMContentLoaded", () => {
 				default:
 					return;
 				case "true":
-					return gapi.auth2.getAuthInstance().signOut().then(() => location.reload());
+					return gapi.auth2.getAuthInstance().signOut().then(() => location.href = ROOT_DIR);
 				case "false":
 					return gapi.auth2.getAuthInstance().signIn(Object.assign(SIGNIN_OPTIONS, { ux_mode: isDesktop ? "popup" : "redirect" }));
 			}
