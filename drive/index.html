@@ -13,6 +13,7 @@
 		<Script Src = "./../libs/materialize/materialize.min.js"></Script>
 		<Script Src = "https://apis.google.com/js/api.js"></Script>
 		<Script Src = "./../libs/common.js" Defer Data-Auth-Required></Script>
+		<Script Src = "./upload.js" Defer></Script>
 	</Head>
 	
 	<Body>
@@ -75,6 +76,7 @@
 
 						<Div Class = "collapsible-body">
 							<UL>
+								<Li><A Href = "./"><I Class = "material-icons">inbox</I>ドライブ</A></Li>
 								<Li><A Href = "./upload"><I Class = "material-icons">cloud_upload</I>コラムをアップロードする</A></Li>
 							</UL>
 						</Div>
@@ -92,7 +94,11 @@
 
 		<Main>
 			<Article>
-				
+				<Span Class = "user-state--drive-columns--yours">0</Span>件のコラムがアップロードされています。
+			</Article>
+
+			<Article ID = "drive">
+
 			</Article>
 		</Main>
 

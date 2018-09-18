@@ -153,13 +153,14 @@ window.addEventListener("DOMContentLoaded", () => {
 	uploader.addEventListener("submit", e => {
 		e.preventDefault();
 
-		CMUploader.uploadColumn().then(resp => {
-			console.log(resp);
+		CMUploader.uploadColumn().then(
+			() => M.toast({ html: "コラムが正常にアップロードされました" }),
 
-			M.toast({ html: "コラムのアップロードに成功しました" });
-		}, error => {
-			M.toast({ classes: "red", html: "コラムのアップロードに失敗しました" });
-		});
+			error => {
+				M.toast({ classes: "red", html: "コラムのアップロードに失敗しました" });
+				throw error;
+			}
+		);
 	});
 
 	columnTypePicker.addEventListener("change", e => CMUploader.changeColumnType(e.target.value));
