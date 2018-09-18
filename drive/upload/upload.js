@@ -122,6 +122,7 @@ class CMUploader {
 					"",
 					JSON.stringify({
 						name: `${user.uid} |:| ${columnNameInputter.value || "Untitled"}.${column.ext}`,
+						originalFilename: columnNameInputter.value || "Untitled",
 						properties: { publishedAt: publishedAtPicker.value },
 	
 						parents: [ DRIVE_DIR_ID ],
