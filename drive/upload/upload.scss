@@ -1,3 +1,13 @@
 @charset "UTF-8";
 
 @import './../../libs/common';
+
+
+
+#uploader {
+	.file-field {
+		.file-path-wrapper {
+			padding-left: 0;
+		}
+	}
+}

@@ -74,6 +74,22 @@ Footer.page-footer {
 	}
 }
 
+::-webkit-scrollbar {
+	width: 12px;
+}
+
+::-webkit-scrollbar-thumb {
+	background: color("materialize-red", "lighten-2");
+
+	&:hover { background: color("materialize-red", "lighten-3") }
+}
+
+::-webkit-scrollbar-track {
+	background: #f5f5f5;
+
+	&:hover { background: #ffffff }
+}
+
 
 
 // コンテンツ要素

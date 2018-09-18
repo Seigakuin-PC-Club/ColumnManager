@@ -13,6 +13,7 @@
 		<Script Src = "./../../libs/materialize/materialize.min.js"></Script>
 		<Script Src = "https://apis.google.com/js/api.js"></Script>
 		<Script Src = "./../../libs/common.js" Defer Data-Auth-Required></Script>
+		<Script Src = "./upload.js" Defer></Script>
 	</Head>
 	
 	<Body>
@@ -97,11 +98,11 @@
 			</Article>
 
 			<Article>
-				<Form ID = "uploader" Class = "container">
+				<Form ID = "uploader" Action = "https://www.googleapis.com/upload/drive/v3/files?uploadType=multipart" Method = "POST" Enctype = "multipart/form-data">
 					<Div Class = "row">
 						<Div Class = "input-field col s12 l6">
-							<Input ID = "uploader-filename" Class = "validate" Type = "Text" />
-							<Label For = "uploader-filename">コラムの名前</Label>
+							<Input ID = "uploader-filename" Class = "validate" Type = "Text" Required />
+							<Label For = "uploader-filename">コラム記事名</Label>
 						</Div>
 
 						<Div Class = "input-field col s12 l6">
@@ -111,16 +112,29 @@
 					</Div>
 
 					<Div Class = "row">
-						<Div Class = "input-field file-field col s12">
-							<Div Class = "btn">
-								<Span>選択</Span>
-								<Input Type = "File" />
-							</Div>
+						<Div Class = "input-field col s12 l4">
+							<Select ID = "uploader-column-type" Required>
+								<Option Value = "" Disabled Selected>ファイルの種類を選択してください</Option>
+								<Option Value = ".png, .jpg, .jpeg">画像ファイル(*.png | *.jpg | *.jpeg)</Option>
+								<Option Value = ".txt, .pdf">文書ファイル(*.txt | *.pdf)</Option>
+								<Option Value = "TEXT_DIRECT">テキストを入力...</Option>
+							</Select>
+
+							<Label>ファイルの種類</Label>
+						</Div>
+
+						<Div Class = "input-field file-field col s12 l6">
+							<Input ID = "uploader-column" Type = "File" />
 
 							<Div Class = "file-path-wrapper">
-								<Input Class = "file-path validate" Type = "Text" />
+								<Input Class = "file-path validate" Type = "Text" Placeholder = "コラムを選択してください" Required />
 							</Div>
 						</Div>
+
+						<Button Class = "input-field btn waves-effect waves-light col s6 l2" Type = "Submit">
+							<I Class = "material-icons left">send</I>
+							アップロード
+						</Button>
 					</Div>
 				</Form>
 			</Article>

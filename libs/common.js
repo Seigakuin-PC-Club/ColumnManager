@@ -70,6 +70,9 @@ class CMUtil {
 // Materializeの初期化処理
 
 window.addEventListener("DOMContentLoaded", () => {
+	const selects = document.querySelectorAll("Select");
+	for (const select of selects) M.FormSelect.init(select);
+	
 	const sidenavs = document.querySelectorAll(".sidenav");
 	for (const sidenav of sidenavs) M.Sidenav.init(sidenav);
 

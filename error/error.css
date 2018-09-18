@@ -56,6 +56,24 @@ Footer.page-footer .footer-copyright .author {
   color: #90CAF9;
 }
 
+::-webkit-scrollbar {
+  width: 12px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #ee6e73;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #f3989b;
+}
+
+::-webkit-scrollbar-track {
+  background: #f5f5f5;
+}
+::-webkit-scrollbar-track:hover {
+  background: #ffffff;
+}
+
 Article {
   margin: 2em 0;
 }
