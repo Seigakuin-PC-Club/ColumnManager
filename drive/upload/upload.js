@@ -88,7 +88,12 @@ class CMUploader {
 
 				columnReader.readAsDataURL(columnFile);
 			} else if (mode === "TEXT") {
-				resolve({ mime: "text/plain", ext: "txt", body: columnTextInputter.value });
+				resolve({
+					mime: "text/plain",
+					ext: "txt",
+					
+					body: window.btoa(unescape(encodeURIComponent(columnTextInputter.value)))
+				});
 			}
 		});
 	}
@@ -99,7 +104,7 @@ class CMUploader {
 	 */
 	static uploadColumn () {
 		if (!Array.prototype.every.call(uploader.querySelectorAll("*[Required]"), item => item.checkValidity())) {
-			return M.toast({ classes: "materialize-red", html: "必須項目が入力されていません" });
+			return M.toast({ classes: "red", html: "必須項目が入力されていません" });
 		}
 
 		return this.getColumnData(this.uploadMode).catch(error => { throw error }).then(column => {
@@ -147,7 +152,14 @@ const BOUNDARY = "ColumnManager";
 window.addEventListener("DOMContentLoaded", () => {
 	uploader.addEventListener("submit", e => {
 		e.preventDefault();
-		CMUploader.uploadColumn();
+
+		CMUploader.uploadColumn().then(resp => {
+			console.log(resp);
+
+			M.toast({ html: "コラムのアップロードに成功しました" });
+		}, error => {
+			M.toast({ classes: "red", html: "コラムのアップロードに失敗しました" });
+		});
 	});
 
 	columnTypePicker.addEventListener("change", e => CMUploader.changeColumnType(e.target.value));
