@@ -21,12 +21,18 @@ class CMUtil {
 	 * @param {String} email メールアドレス
 	 * @return {Boolean}
 	 */
-	static validateEmail (email) { return /^b\d{5}@seig-boys\.jp/.test(email) }
+	static validateEmail (email) { return UID_MATCHER.test(email) }
 
 	/** Google API周りの変数を初期化します */
 	static initShorthands () {
 		auth = gapi.auth2.getAuthInstance();
 		user = auth.currentUser.get();
+
+		if (auth.isSignedIn.get()) {
+			user.uid =
+				user.getBasicProfile().getEmail().match(UID_MATCHER).length ?
+				user.getBasicProfile().getEmail().match(UID_MATCHER)[1] : "";
+		}
 	}
 
 	static onAuthorizedHandler (isSignedIn) {
@@ -67,6 +73,34 @@ class CMUtil {
 
 
 
+// 定数定義
+
+const ROOT_DIR = location.host === "seigakuin-pc-club.github.io" ? `${location.origin}/ColumnManager` : location.origin;
+const DRIVE_DIR_ID = "1MoMuOrbicOuO7xMtcJ5crk87dW7OuxTM";
+
+const CLIENT_OPTIONS = {
+	apiKey: "AIzaSyB1VKWTrQ8d6yQ-5a7e_q_nz5xCpETrE60",
+	clientId: "894129288771-s8j9a9muf2cbs4vs79h1uhagcc73jrd2.apps.googleusercontent.com",
+	scope: "https://www.googleapis.com/auth/drive",
+	discoveryDocs: ["https://www.googleapis.com/discovery/v1/apis/drive/v3/rest"],
+
+	hosted_domain: "seig-boys.jp",
+};
+
+const SIGNIN_OPTIONS = {
+	scope: "email openid",
+	redirect_uri: ROOT_DIR,
+
+	// ux_mode: "popup" | "redirect",
+};
+
+const UID_MATCHER = /^(b\d{5})@seig-boys\.jp/;
+
+let auth = null;
+let user = null;
+
+
+
 // Materializeの初期化処理
 
 window.addEventListener("DOMContentLoaded", () => {
@@ -95,31 +129,6 @@ window.addEventListener("DOMContentLoaded", () => {
 
 
 // Google APIとの連携処理
-
-const ROOT_DIR = location.host === "seigakuin-pc-club.github.io" ? `${location.origin}/ColumnManager` : location.origin;
-
-const CLIENT_OPTIONS = {
-	apiKey: "AIzaSyB1VKWTrQ8d6yQ-5a7e_q_nz5xCpETrE60",
-	clientId: "894129288771-s8j9a9muf2cbs4vs79h1uhagcc73jrd2.apps.googleusercontent.com",
-	scope: "https://www.googleapis.com/auth/drive",
-	discoveryDocs: ["https://www.googleapis.com/discovery/v1/apis/drive/v3/rest"],
-
-	hosted_domain: "seig-boys.jp",
-};
-
-const SIGNIN_OPTIONS = {
-	scope: "email openid",
-	redirect_uri: ROOT_DIR,
-
-	// ux_mode: "popup" | "redirect",
-};
-
-const DRIVE_DIR_ID = "1MoMuOrbicOuO7xMtcJ5crk87dW7OuxTM";
-
-let auth = null;
-let user = null;
-
-
 
 window.addEventListener("DOMContentLoaded", () => {
 	// Google APIとの連携
@@ -159,5 +168,4 @@ window.addEventListener("DOMContentLoaded", () => {
 
 
 
-/* global M */
-/* global gapi */
+/* global M, gapi */

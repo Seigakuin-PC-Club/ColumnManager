@@ -98,11 +98,11 @@
 			</Article>
 
 			<Article>
-				<Form ID = "uploader" Action = "https://www.googleapis.com/upload/drive/v3/files?uploadType=multipart" Method = "POST" Enctype = "multipart/form-data">
+				<Form ID = "uploader" Action = "https://www.googleapis.com/upload/drive/v3/files?uploadType=multipart" Method = "POST" Enctype = "multipart/related">
 					<Div ID = "uploader-metadata" Class = "row">
 						<Div Class = "input-field col s12 l6">
-							<Input ID = "uploader-filename" Class = "validate" Type = "Text" Required />
-							<Label For = "uploader-filename">コラム記事名</Label>
+							<Input ID = "uploader-column-name" Class = "validate" Type = "Text" Required />
+							<Label For = "uploader-column-name">コラム記事名</Label>
 						</Div>
 
 						<Div Class = "input-field col s12 l6">
@@ -136,7 +136,7 @@
 							<Label For = "uploader-column--text">コラムの本文を入力してください</Label>
 						</Div>
 
-						<Button Class = "input-field btn waves-effect waves-light col s6 l2" Type = "Submit">
+						<Button ID = "uploader-upload" Class = "input-field btn waves-effect waves-light col s6 l2" Type = "Submit">
 							<I Class = "material-icons left">send</I>
 							アップロード
 						</Button>
