@@ -24,8 +24,8 @@
 					<A Class = "sidenav-trigger" Data-Target = "drawer"><I Class = "material-icons">menu</I></A>
 					<UL Class = "right hide-on-med-and-down">
 						<Li>
-							<A Class = "btn--sign-in-out btn--sign-in-out--desktop">
-								<Span Class = "user-state--is-signed-in message--UserState_isSignedIn message-short">Google認証中...</Span>
+							<A Class = "btn--sign-in-out btn--sign-in-out--desktop hide">
+								<Span Class = "user-state--is-signed-in message--UserState_isSignedIn">Sign in</Span>
 								<I Class = "material-icons right">person</I>
 							</A>
 						</Li>
@@ -45,21 +45,19 @@
 
 		<UL ID = "drawer" Class = "sidenav sidenav-fixed">
 			<Li Class = "user-state-panel">
-				<Div Class = "user-view hide">
+				<Div Class = "user-view">
 					<Div Class = "background"></Div>
 
 					<Img Class = "user-state--photo circle" Src = "./../assets/profile-default.png" />
-					<Span Class = "user-state--name name">ログインされていません</Span>
-					<Span Class = "user-state--email email"></Span>
+					<Span Class = "name user-state--name message--UserState_isSignedIn message-long">Google認証中...</Span>
+					<Span Class = "email user-state--email"></Span>
 				</Div>
-
-				<Div Class = "user-view hide-on-med-and-down">Google認証中です...</Div>
 			</Li>
 
 			<Li Class = "hide-on-large-only">
-				<A Class = "btn--sign-in-out btn--sign-in-out--mobile">
+				<A Class = "btn--sign-in-out btn--sign-in-out--mobile hide">
 					<I Class = "material-icons left">person</I>
-					<Span Class = "user-state--is-signed-in message--UserState_isSignedIn message-long">Google認証中です...</Span>
+					<Span Class = "user-state--is-signed-in message--UserState_isSignedIn">Sign in</Span>
 				</A>
 			</Li>
 

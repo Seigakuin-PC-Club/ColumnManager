@@ -16,21 +16,17 @@ const drawer = document.querySelector("#drawer");
 
 const MESSAGES = {
 	UserState_isSignedIn: {
-		true: { short: "Sign out", long: "Sign out" },
-		false: { short: "Sign in", long: "Sign in" },
-		null: { short: "未接続", long: "インターネット未接続" }
+		true: { short: "Sign out", long: "ログインされています" },
+		false: { short: "Sign in", long: "ログインされていません" },
+	},
+
+	isNetworkConnected: {
+		true: { short: "接続済み", long: "接続されています" },
+		false: { short: "未接続", long: "ネットワークに接続されていません" },
 	}
 };
 
 class CMCommon {
-	/**
-	 * 指定されたメールアドレスが生徒用のものかどうか照合します
-	 * 
-	 * @param {String} email メールアドレス
-	 * @return {Boolean}
-	 */
-	static validateEmail (email) { return UID_MATCHER.test(email) }
-
 	/**
 	 * 指定された要素に紐付けられたメッセージを代入します
 	 * 
@@ -52,6 +48,14 @@ class CMCommon {
 		elem[propertyName] = MESSAGES[msgName][state][msgType];
 	}
 
+	/**
+	 * 指定されたメールアドレスが生徒用のものかどうか照合します
+	 * 
+	 * @param {String} email メールアドレス
+	 * @return {Boolean}
+	 */
+	static checkEmailValidity (email) { return UID_MATCHER.test(email) }
+
 	/** Google API周りの変数を初期化します */
 	static initShorthands () {
 		if (!window.gapi) return;
@@ -69,32 +73,34 @@ class CMCommon {
 	static onAuthorizedHandler (isSignedIn) {
 		if (scriptLoader.dataset.authRequired !== undefined && !isSignedIn) return location.href = ROOT_DIR;
 
-		for (const userStatePanel of userStatePanels) {
-			for (const part of userStatePanel.querySelectorAll(".user-view")) part.classList.toggle("hide");
-		}
-
-		this.updateSignedInState(isSignedIn);
-	}
-
-	static onDisconnectedHandler () {
-		this.onAuthorizedHandler(null);
-	}
-
-	static updateSignedInState (isSignedIn) {
 		this.initShorthands();
 
-		if (isSignedIn && !this.validateEmail(user.getBasicProfile().getEmail())) {
+		if (isSignedIn && !this.checkEmailValidity(user.getBasicProfile().getEmail())) {
 			return auth.signOut().then(() => location.href = `${ROOT_DIR}/error/403`);
 		}
 
+		if (isSignedIn === null) {
+			for (const name of userNameStates) name.textContent = MESSAGES.isNetworkConnected.false.long;
+			return;
+		}
+
 		for (const isSignedInState of isSignedInStates) this.updateMessage(isSignedInState, isSignedIn);
-		for (const signInOutBtn of signInOutBtns) signInOutBtn.dataset.isSignedIn = isSignedIn;
+		for (const signInOutBtn of signInOutBtns) {
+			signInOutBtn.classList.remove("hide");
+			signInOutBtn.dataset.isSignedIn = isSignedIn;
+		}
 
 		this.updateUserPanel(isSignedIn ? user : null);
 	}
 
 	static updateUserPanel (user) {
-		if (!user) return;
+		if (!user) {
+			for (const photo of userPhotoStates) photo.src = `${ROOT_DIR}/assets/profile-default.png`;
+			for (const name of userNameStates) this.updateMessage(name, false);
+			for (const email of userEmailStates) email.textContent = "";
+			
+			return;
+		}
 
 		const profile = user.getBasicProfile();
 
@@ -168,18 +174,15 @@ window.addEventListener("DOMContentLoaded", () => {
 window.addEventListener("DOMContentLoaded", () => {
 	// Google APIとの連携
 
-	if (!window.gapi) return CMCommon.onDisconnectedHandler();
+	if (!window.gapi) return CMCommon.onAuthorizedHandler(null);
 	
 	gapi.load("client:auth2", () => {
 		Promise.all([
 			gapi.client.init(CLIENT_OPTIONS).catch(error => { throw error }),
 			gapi.auth2.getAuthInstance()
 		]).then(() => {
-			CMCommon.initShorthands();
-
-			const isSignedIn = auth.isSignedIn.get();
-			CMCommon.onAuthorizedHandler(isSignedIn);
-			auth.isSignedIn.listen(state => CMCommon.updateSignedInState(state));
+			CMCommon.onAuthorizedHandler(gapi.auth2.getAuthInstance().isSignedIn.get());
+			auth.isSignedIn.listen(state => CMCommon.onAuthorizedHandler(state));
 		});
 	});
 
