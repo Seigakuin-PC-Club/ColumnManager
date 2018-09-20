@@ -14,7 +14,15 @@ const drawer = document.querySelector("#drawer");
 
 // メソッド定義
 
-class CMUtil {
+const MESSAGES = {
+	UserState_isSignedIn: {
+		true: { short: "Sign out", long: "Sign out" },
+		false: { short: "Sign in", long: "Sign in" },
+		null: { short: "未接続", long: "インターネット未接続" }
+	}
+};
+
+class CMCommon {
 	/**
 	 * 指定されたメールアドレスが生徒用のものかどうか照合します
 	 * 
@@ -23,8 +31,31 @@ class CMUtil {
 	 */
 	static validateEmail (email) { return UID_MATCHER.test(email) }
 
+	/**
+	 * 指定された要素に紐付けられたメッセージを代入します
+	 * 
+	 * @param {HTMLElement} elem DOM要素
+	 * @param {any} state 状態
+	 * @param {String} [propertyName="textContent"] 代入時に利用されるプロパティ名
+	 */
+	static updateMessage (elem, state, propertyName = "textContent") {
+		const MSGNAME_MATCHER = /^message--/;
+		const MSGTYPE_MATCHER = /^message-(short|long)/;
+
+		let msgName = null;
+		let msgType = "short";
+		for (const className of Array.prototype.values.call(elem.classList)) {
+			if (MSGNAME_MATCHER.test(className)) msgName = className.split(MSGNAME_MATCHER)[1];
+			if (MSGTYPE_MATCHER.test(className)) msgType = className.match(MSGTYPE_MATCHER)[1];
+		}
+
+		elem[propertyName] = MESSAGES[msgName][state][msgType];
+	}
+
 	/** Google API周りの変数を初期化します */
 	static initShorthands () {
+		if (!window.gapi) return;
+
 		auth = gapi.auth2.getAuthInstance();
 		user = auth.currentUser.get();
 
@@ -45,6 +76,10 @@ class CMUtil {
 		this.updateSignedInState(isSignedIn);
 	}
 
+	static onDisconnectedHandler () {
+		this.onAuthorizedHandler(null);
+	}
+
 	static updateSignedInState (isSignedIn) {
 		this.initShorthands();
 
@@ -52,7 +87,7 @@ class CMUtil {
 			return auth.signOut().then(() => location.href = `${ROOT_DIR}/error/403`);
 		}
 
-		for (const isSignedInState of isSignedInStates) isSignedInState.textContent = !isSignedIn ? "Sign in" : "Sign out";
+		for (const isSignedInState of isSignedInStates) this.updateMessage(isSignedInState, isSignedIn);
 		for (const signInOutBtn of signInOutBtns) signInOutBtn.dataset.isSignedIn = isSignedIn;
 
 		this.updateUserPanel(isSignedIn ? user : null);
@@ -132,17 +167,19 @@ window.addEventListener("DOMContentLoaded", () => {
 
 window.addEventListener("DOMContentLoaded", () => {
 	// Google APIとの連携
+
+	if (!window.gapi) return CMCommon.onDisconnectedHandler();
 	
 	gapi.load("client:auth2", () => {
 		Promise.all([
 			gapi.client.init(CLIENT_OPTIONS).catch(error => { throw error }),
 			gapi.auth2.getAuthInstance()
 		]).then(() => {
-			CMUtil.initShorthands();
+			CMCommon.initShorthands();
 
 			const isSignedIn = auth.isSignedIn.get();
-			CMUtil.onAuthorizedHandler(isSignedIn);
-			auth.isSignedIn.listen(state => CMUtil.updateSignedInState(state));
+			CMCommon.onAuthorizedHandler(isSignedIn);
+			auth.isSignedIn.listen(state => CMCommon.updateSignedInState(state));
 		});
 	});
 

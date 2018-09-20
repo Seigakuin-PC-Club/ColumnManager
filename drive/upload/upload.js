@@ -170,4 +170,4 @@ window.addEventListener("DOMContentLoaded", () => {
 
 
 
-/* global DRIVE_DIR_ID, M, gapi, user */
+/* global M, TemplateLoader, gapi, user, DRIVE_DIR_ID */
