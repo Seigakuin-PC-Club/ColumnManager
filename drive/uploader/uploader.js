@@ -155,11 +155,17 @@ window.addEventListener("DOMContentLoaded", () => {
 	uploader.addEventListener("submit", e => {
 		e.preventDefault();
 
+		uploadBtn.disabled = true;
 		CMUploader.uploadColumn().then(
-			() => M.toast({ html: "コラムが正常にアップロードされました" }),
+			() => {
+				M.toast({ html: "コラムが正常にアップロードされました" });
+				uploadBtn.disabled = false;
+			},
 
 			error => {
 				M.toast({ classes: "red", html: "コラムのアップロードに失敗しました" });
+				uploadBtn.disabled = false;
+				
 				throw error;
 			}
 		);
