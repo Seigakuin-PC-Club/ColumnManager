@@ -129,7 +129,7 @@ class CMUploader {
 						originalFilename: columnNameInputter.value || "Untitled",
 
 						properties: {
-							publishedAt: publishedAtPicker.M_Datepicker.date.toJSON(),
+							publishedAt: publishedAtPicker.M_Datepicker.date ? publishedAtPicker.M_Datepicker.date.toJSON() : "",
 							usedStudents: column.isUsedByAuthor ? [ user.uid ].join(" ") : ""
 						},
 	
