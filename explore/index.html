@@ -4,17 +4,17 @@
 	<Head>
 		<Meta Charset = "UTF-8" />
 		<Meta Name = "Viewport" Content = "Width=Device-Width, Initial-Scale=1, User-Scalable=No" />
-		<Title>ドライブ | Column Manager - 小さな力を、大きな力に。</Title>
+		<Title>コラム検索 | Column Manager - 小さな力を、大きな力に。</Title>
 
 		<Link Rel = "StyleSheet" Href = "./../libs/materialize/materialize.min.css" />
 		<Link Rel = "StyleSheet" Href = "./../libs/material-icons/material-icons.css" />
-		<Link Rel = "StyleSheet" Href = "./drive.css" />
+		<Link Rel = "StyleSheet" Href = "./explore.css" />
 
 		<Script Src = "./../libs/materialize/materialize.min.js"></Script>
 		<Script Src = "https://apis.google.com/js/api.js"></Script>
 		<Script Src = "./../libs/TemplateLoader.js"></Script>
 		<Script Src = "./../libs/common.js" Defer Data-Auth-Required></Script>
-		<Script Src = "./drive.js" Defer></Script>
+		<Script Src = "./explore.js" Defer></Script>
 	</Head>
 	
 	<Body>
@@ -38,7 +38,7 @@
 					<Div Class = "nav-wrapper">
 						<Div Class = "col s12">
 							<A Class = "breadcrumb" Href = "./../">Top</A>
-							<A Class = "breadcrumb">ドライブ</A>
+							<A Class = "breadcrumb">コラム検索</A>
 						</Div>
 					</Div>
 				</Div>
@@ -66,26 +66,14 @@
 			<Div Class = "divider"></Div>
 
 			<Li Class = "hide">
-				<UL Class = "collapsible collapsible-accordion">
-					<Li Class = "active">
-						<A Class = "collapsible-header">
-							<I Class = "material-icons"></I>
-							自分のコラムを管理する
-						</A>
-
-						<Div Class = "collapsible-body">
-							<UL>
-								<Li><A Href = "./"><I Class = "material-icons">inbox</I>ドライブ</A></Li>
-								<Li><A Href = "./uploader"><I Class = "material-icons">cloud_upload</I>コラムをアップロードする</A></Li>
-								<Li Class = "divider"></Li>
-							</UL>
-						</Div>
-					</Li>
-				</UL>
+				<A Href = "./../drive">
+					<I Class = "material-icons left">inbox</I>
+					自分のコラムを管理する
+				</A>
 			</Li>
 
 			<Li Class = "hide">
-				<A Href = "./../explore">
+				<A Href = "./">
 					<I Class = "material-icons left">explore</I>
 					みんなのコラムを閲覧する
 				</A>
@@ -94,11 +82,11 @@
 
 		<Main>
 			<Article>
-				<Span Class = "drive-state--columns--yours">0</Span>件のコラムがアップロードされています。
+				<Span Class = "drive-state--columns--all">0</Span>件のコラムがアップロードされています。
 			</Article>
 
 			<Article>
-				<Div ID = "drive" Class = "row">
+				<Div ID = "explore" Class = "row">
 				</Div>
 			</Article>
 		</Main>

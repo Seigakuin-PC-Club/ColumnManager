@@ -1,30 +1,15 @@
 // ページ内要素定義
 
-const yourColumnsStates = document.querySelectorAll(".drive-state--columns--yours");
+const allColumnsStates = document.querySelectorAll(".drive-state--columns--all");
 
-const drive = document.getElementById("drive");
+const explore = document.getElementById("explore");
 
 
 
 // メソッド定義
 
-const CMDrive = (() => {
-	class CMDrive {
-		/**
-		 * アルファベット・数字で構成されたUUIDをランダムに生成します
-		 * 
-		 * @param {Number} [length=8] UUIDの長さ
-		 * @return {String}
-		 */
-		static generateUuid (length = 8) {
-			let uuid = "";
-	
-			let counter = 0;
-			while (counter++ < length) uuid += this.UUID_CHARS[ Math.floor(Math.random() * this.UUID_CHARS.length) ];
-	
-			return uuid;
-		}
-
+const CMExplore = (() => {
+	class CMExplore {
 		static changeThumbnailSize (url, size) {
 			if (this.COLUMN_THUMBNAIL_MATCHER.test(url)) return url.replace(url.match(this.COLUMN_THUMBNAIL_MATCHER)[1], size ? `=s${size}` : "");
 			if (this.FILETYPE_THUMBNAIL_MATCHER.test(url)) return url.replace(url.match(this.FILETYPE_THUMBNAIL_MATCHER)[1], size || "16");
@@ -58,13 +43,13 @@ const CMDrive = (() => {
 		}
 	}
 
-	CMDrive.UUID_CHARS = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789".split("");
-	CMDrive.COLUMN_THUMBNAIL_MATCHER = /^https:\/\/(?:.*\.)?googleusercontent\.com\/.+(=s\d+)$/;
-	CMDrive.FILETYPE_THUMBNAIL_MATCHER = /^https:\/\/(?:.*\.)?googleusercontent\.com\/(\d+)\/.+/;
+	CMExplore.UUID_CHARS = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789".split("");
+	CMExplore.COLUMN_THUMBNAIL_MATCHER = /^https:\/\/(?:.*\.)?googleusercontent\.com\/.+(=s\d+)$/;
+	CMExplore.FILETYPE_THUMBNAIL_MATCHER = /^https:\/\/(?:.*\.)?googleusercontent\.com\/(\d+)\/.+/;
 
 
 
-	return CMDrive;
+	return CMExplore;
 })();
 
 /**
@@ -93,28 +78,28 @@ Promise.all([
 ]).then(() => {
 	CMCommon.on("authorized").then(() => {
 		return gapi.client.drive.files.list({
-			q: `parents in "${DRIVE_DIR_ID}" and name contains "${user.uid}" and trashed != true`,
-			fields: "files(id,name,originalFilename,createdTime,properties,webContentLink,iconLink,hasThumbnail,thumbnailLink)"
+			q: `parents in "${DRIVE_DIR_ID}" and trashed != true`,
+			fields: "files(id,name,originalFilename,owners(displayName,photoLink,emailAddress),createdTime,properties,webContentLink,iconLink,hasThumbnail,thumbnailLink)"
 		});
 	}).then(resp => {
 		const columns = resp.result.files;
 
-		for (const yourColumnsState of yourColumnsStates) yourColumnsState.textContent = columns.length;
+		for (const allColumnsState of allColumnsStates) allColumnsState.textContent = columns.length;
 		for (const column of columns) {
 			column.properties.usedStudents = column.properties.usedStudents ? column.properties.usedStudents.split(" ") : [];
 
-			const columnPanel = templates.createComponent("Column--Own", column.id, CMDrive.generateUuid(8));
+			const columnPanel = templates.createComponent("Column", column.id);
 
-			CMDrive.updateColumnStates(columnPanel, {
+			CMExplore.updateColumnStates(columnPanel, {
 				title: column.originalFilename,
-				thumbnail: column.hasThumbnail ? CMDrive.changeThumbnailSize(column.thumbnailLink) : CMDrive.changeThumbnailSize(column.iconLink, 256),
+				thumbnail: column.hasThumbnail ? CMExplore.changeThumbnailSize(column.thumbnailLink) : CMExplore.changeThumbnailSize(column.iconLink, 256),
+				authors: column.owners.map(owner => owner.displayName),
 				uploadedAt: column.createdTime,
 				publishedAt: column.properties.publishedAt,
 				usedStudents: column.properties.usedStudents
 			});
 
-			drive.appendChild(columnPanel);
-			for (const menuTrigger of columnPanel.querySelectorAll(".dropdown-trigger")) M.Dropdown.init(menuTrigger);
+			explore.appendChild(columnPanel);
 
 			for (const downloadBtn of columnPanel.querySelectorAll(".column-download")) {
 				downloadBtn.addEventListener("click", () => {
@@ -137,7 +122,7 @@ Promise.all([
 						).then(
 							() => {
 								M.toast({ html: "ダウンロードが完了しました" });
-								CMDrive.updateColumnStates(columnPanel, { usedStudents: column.properties.usedStudents });
+								CMExplore.updateColumnStates(columnPanel, { usedStudents: column.properties.usedStudents });
 							},
 
 							error => {
@@ -156,7 +141,7 @@ Promise.all([
 							M.toast({ html: "コラムの削除に成功しました" });
 
 							columnPanel.remove();
-							for (const yourColumnsState of yourColumnsStates) yourColumnsState.textContent = yourColumnsState.textContent - 1;
+							for (const allColumnsState of allColumnsStates) allColumnsState.textContent = allColumnsState.textContent - 1;
 						},
 
 						error => {
