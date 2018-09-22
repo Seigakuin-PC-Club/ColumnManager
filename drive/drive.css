@@ -108,8 +108,5 @@ Article:first-child {
   height: 100%;
   background: rgba(0, 0, 0, 0.5);
 }
-.column .column-state--used-count::before {
-  content: var(--column-used-count);
-}
 
 /*# sourceMappingURL=drive.css.map */

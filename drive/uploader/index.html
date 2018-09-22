@@ -124,23 +124,43 @@
 							<Label>ファイルの種類</Label>
 						</Div>
 
-						<Div Class = "input-field file-field col s12 l6 hide">
+						<Div Class = "input-field file-field col s12 l8 hide">
 							<Input ID = "uploader-column--file" Type = "File" Required />
 
 							<Div Class = "file-path-wrapper">
 								<Input ID = "uploader-column--file--name" Class = "file-path" Type = "Text" Placeholder = "コラムを選択してください" Readonly />
 							</Div>
+
+							<Div Class = "switch">
+								<Label>
+									コラム未使用
+									<Input ID = "uploader-column-used--file" Type = "Checkbox" />
+									<Span Class = "lever"></Span>
+									コラム使用済み
+								</Label>
+							</Div>
 						</Div>
 
-						<Div Class = "input-field col s12 l6 hide">
+						<Div Class = "input-field col s12 l8 hide">
 							<Textarea ID = "uploader-column--text" Class = "materialize-textarea validate invalid" Required></Textarea>
 							<Label For = "uploader-column--text">コラムの本文を入力してください</Label>
+
+							<Div Class = "switch">
+								<Label>
+									コラム未使用
+									<Input ID = "uploader-column-used--text" Type = "Checkbox" />
+									<Span Class = "lever"></Span>
+									コラム使用済み
+								</Label>
+							</Div>
 						</Div>
 
-						<Button ID = "uploader-upload" Class = "input-field btn waves-effect waves-light col s6 l2" Type = "Submit">
-							<I Class = "material-icons left">send</I>
-							アップロード
-						</Button>
+						<Div Class = "input-field col right">
+							<Button ID = "uploader-upload" Class = "btn waves-effect waves-light" Type = "Submit">
+								<I Class = "material-icons left">send</I>
+								アップロード
+							</Button>
+						</Div>
 					</Div>
 				</Form>
 			</Article>

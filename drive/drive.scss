@@ -21,10 +21,4 @@
 			background: rgba(0, 0, 0, 0.5);
 		}
 	}
-
-	.column-state--used-count {
-		&::before {
-			content: var(--column-used-count);
-		}
-	}
 }

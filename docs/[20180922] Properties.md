@@ -13,8 +13,8 @@
 "files": [
 	{
 		"properties": {
-			"publishedAt": "yyyy/mm/dd",
-			"usedStudents": [""] //学籍番号の配列
+			"publishedAt": "2017-12-31T15:00:00.000Z", // {:Date}.toJSON()
+			"usedStudents": "" // 学籍番号のスペース区切り配列 (ex: "student1 student2 student4")
 		}
 	}
 ]

@@ -1,21 +1,21 @@
 <Head></Head>
 
 <Body>
-	<Div DTL:Name = "Column--Own" Class = "card medium col s12 l4 column column--own" Style = "--column-thumbnail: url(https://lh3.googleusercontent.com/0cFNxetaP0oqzSvBLyDwBdWBYMRk01fC_Pt6DY1YFlVck71BK0I78lpB8PgMznztGQP2ulB3uHs=s800); --column-used-count: '3'">
+	<Div DTL:Name = "Column--Own" Class = "card medium col s12 l4 column column--own" Style = "--column-thumbnail: url(https://lh3.googleusercontent.com/0cFNxetaP0oqzSvBLyDwBdWBYMRk01fC_Pt6DY1YFlVck71BK0I78lpB8PgMznztGQP2ulB3uHs=s800)">
 		<Div Class = "card-image">
-			<Span Class = "card-title activator column-state--title">国境を超えた日 | どっかのプログラなーいのブログ。</Span>
+			<Span Class = "card-title activator column-title">国境を超えた日 | どっかのプログラなーいのブログ。</Span>
 		</Div>
 
 		<Div Class = "card-content">
-			<A Class = "card-title dropdown-trigger" Data-Target = "column-menu--abcdefg"><I Class = "material-icons right">more_vert</I></A>
+			<A Class = "card-title dropdown-trigger" Data-Target = "column-menu--${0}"><I Class = "material-icons right">more_vert</I></A>
 
-			<UL ID = "column-menu--abcdefg" Class = "dropdown-content">
+			<UL ID = "column-menu--${0}" Class = "dropdown-content">
 				<Li><A Class = "column-menu-delete"><I Class = "material-icons left">delete</I>削除</A></Li>
 			</UL>
 
 			<P>
-				アップロード日時：<Span Class = "column-state--uploaded-at"></Span><Br />
-				自分の利用状況：<Span Class = "column-state--is-used-for-you">未</Span>
+				アップロード日：<Span Class = "column-uploaded-at">2018/1/1</Span><Br />
+				自分の利用状況：<Span Class = "column-used">未</Span>
 			</P>
 		</Div>
 
@@ -24,9 +24,9 @@
 			
 			<Table Class = "column-properties">
 				<TBody>
-					<Tr><Td>アップロード日時</Td><Td Class = "column-state--uploaded-at"></Td></Tr>
-					<Tr><Td>記事収載日</Td><Td Class = "column-state--published-at"></Td></Tr>
-					<Tr><Td>この記事を利用した人数</Td><Td Class = "column-state--used-count"></Td></Tr>
+					<Tr><Td>アップロード日</Td><Td Class = "column-uploaded-at"></Td></Tr>
+					<Tr><Td>記事収載日</Td><Td Class = "column-published-at"></Td></Tr>
+					<Tr><Td>利用人数</Td><Td Class = "column-used-count"></Td></Tr>
 				</TBody>
 			</Table>
 		</Div>

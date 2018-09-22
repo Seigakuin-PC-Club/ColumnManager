@@ -8,7 +8,9 @@ const mediaForm = document.getElementById("uploader-media");
 const columnTypePicker = document.getElementById("uploader-column-type");
 let columnFilePicker = document.getElementById("uploader-column--file");
 const columnFilename = document.getElementById("uploader-column--file--name");
+const columnFileUsedPicker = document.getElementById("uploader-column-used--file");
 const columnTextInputter = document.getElementById("uploader-column--text");
+const columnTextUsedPicker = document.getElementById("uploader-column-used--text");
 const uploadBtn = document.getElementById("uploader-upload");
 
 
@@ -67,7 +69,7 @@ class CMUploader {
 	 * コラムのデータを読み込みます
 	 * 
 	 * @param {"FILE" | "TEXT"} mode アップロードモード
-	 * @return {Promise<{ mime: String, ext: String, body: String }>}
+	 * @return {Promise<{ mime: String, ext: String, body: String, isUsedByAuthor: Boolean }>}
 	 */
 	static getColumnData (mode) {
 		return new Promise((resolve, reject) => {
@@ -80,7 +82,8 @@ class CMUploader {
 						mime: columnFile.type,
 						ext: columnFile.name.split(".").slice(-1).join(""),
 
-						body: e.target.result.split(",").slice(1).join("")
+						body: e.target.result.split(",").slice(1).join(""),
+						isUsedByAuthor: columnFileUsedPicker.checked
 					});
 				});
 
@@ -92,7 +95,8 @@ class CMUploader {
 					mime: "text/plain",
 					ext: "txt",
 					
-					body: window.btoa(unescape(encodeURIComponent(columnTextInputter.value)))
+					body: window.btoa(unescape(encodeURIComponent(columnTextInputter.value))),
+					isUsedByAuthor: columnTextUsedPicker.checked
 				});
 			}
 		});
@@ -123,7 +127,11 @@ class CMUploader {
 					JSON.stringify({
 						name: `${user.uid} |:| ${columnNameInputter.value || "Untitled"}.${column.ext}`,
 						originalFilename: columnNameInputter.value || "Untitled",
-						properties: { publishedAt: publishedAtPicker.value },
+
+						properties: {
+							publishedAt: publishedAtPicker.M_Datepicker.date.toJSON(),
+							usedStudents: column.isUsedByAuthor ? [ user.uid ].join(" ") : ""
+						},
 	
 						parents: [ DRIVE_DIR_ID ],
 					}, null, "\t"),

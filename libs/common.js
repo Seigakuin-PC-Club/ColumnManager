@@ -28,6 +28,40 @@ const MESSAGES = {
 
 class CMCommon {
 	/**
+	 * イベントを登録します
+	 * 
+	 * @param {CMCommon.Events} event 登録するイベント
+	 * @param {Function} [callback] イベントのコールバック
+	 * 
+	 * @return {Promise}
+	 */
+	static on (event, callback) {
+		switch (event) {
+			default:
+				throw new TypeError("The provided event is not defined");
+			case "authorized":
+				if (callback instanceof Function) callback();
+
+				return new Promise((resolve, reject) => {
+					let counter = 0;
+					const detector = setInterval(() => {
+						counter++;
+						
+						if (isAuthorized) {
+							clearInterval(detector);
+							return resolve();
+						}
+			
+						if (counter >= 10000) {
+							clearInterval(detector);
+							return reject(new Error("Connection has been disconnected by a timeout"));
+						}
+					});
+				});
+		}
+	}
+
+	/**
 	 * 指定された要素に紐付けられたメッセージを代入します
 	 * 
 	 * @param {HTMLElement} elem DOM要素
@@ -59,7 +93,7 @@ class CMCommon {
 	/** Google API周りの変数を初期化します */
 	static initShorthands () {
 		if (!window.gapi) return;
-
+		
 		auth = gapi.auth2.getAuthInstance();
 		user = auth.currentUser.get();
 
@@ -83,6 +117,8 @@ class CMCommon {
 			for (const name of userNameStates) name.textContent = MESSAGES.State_isNetworkConnected.false.long;
 			return;
 		}
+
+		isAuthorized = true;
 
 		for (const isSignedInState of isSignedInStates) this.updateMessage(isSignedInState, isSignedIn);
 		for (const signInOutBtn of signInOutBtns) {
@@ -112,6 +148,10 @@ class CMCommon {
 	}
 }
 
+/**
+ * @typedef {"authorized"} CMCommon.Events
+ */
+
 
 
 // 定数定義
@@ -137,6 +177,7 @@ const SIGNIN_OPTIONS = {
 
 const UID_MATCHER = /^(b\d{5})@seig-boys\.jp/;
 
+let isAuthorized = false;
 let auth = null;
 let user = null;
 
