@@ -29,6 +29,26 @@ const CMDrive = (() => {
 			if (this.COLUMN_THUMBNAIL_MATCHER.test(url)) return url.replace(url.match(this.COLUMN_THUMBNAIL_MATCHER)[1], size ? `=s${size}` : "");
 			if (this.FILETYPE_THUMBNAIL_MATCHER.test(url)) return url.replace(url.match(this.FILETYPE_THUMBNAIL_MATCHER)[1], size || "16");
 		}
+
+		static updateColumnStates (column, states) {
+			if (!states) return;
+
+			if (states.title !== undefined) for (const title of column.querySelectorAll(".column-title")) title.textContent = states.title;
+			if (states.thumbnail !== undefined) column.style.setProperty("--column-thumbnail", `url(${states.thumbnail})`);
+			if (states.uploadedAt !== undefined) for (const uploadedAtState of column.querySelectorAll(".column-uploaded-at")) uploadedAtState.textContent = new Date(states.uploadedAt).toLocaleDateString();
+			if (states.publishedAt !== undefined) for (const publishedAtState of column.querySelectorAll(".column-published-at")) publishedAtState.textContent = states.publishedAt ? new Date(states.publishedAt).toLocaleDateString() : "不明";
+
+			if (states.usedStudents && Array.isArray(states.usedStudents)) {
+				for (const usedCountState of column.querySelectorAll(".column-used-count")) usedCountState.textContent = states.usedStudents.length;
+
+				for (const usedByAuthor of column.querySelectorAll(".column-used-by-author")) {
+					if (states.usedStudents.indexOf(user.uid) < 0) break;
+	
+					usedByAuthor.classList.add("red-text");
+					usedByAuthor.textContent = "済";
+				}
+			}
+		}
 	}
 
 	CMDrive.UUID_CHARS = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789".split("");
@@ -66,23 +86,18 @@ Promise.all([
 		for (const column of columns) {
 			column.properties.usedStudents = column.properties.usedStudents ? column.properties.usedStudents.split(" ") : [];
 
-			const { publishedAt, usedStudents } = column.properties;
-
 			const columnPanel = templates.createComponent("Column--Own", column.id, CMDrive.generateUuid(8));
-			columnPanel.style.setProperty("--column-thumbnail", `url(${column.hasThumbnail ? CMDrive.changeThumbnailSize(column.thumbnailLink) : CMDrive.changeThumbnailSize(column.iconLink, 256)})`);
 
-			for (const title of columnPanel.querySelectorAll(".column-title")) title.textContent = column.originalFilename;
-			for (const uploadedAtState of columnPanel.querySelectorAll(".column-uploaded-at")) uploadedAtState.textContent = new Date(column.createdTime).toLocaleDateString();
-			for (const publishedAtState of columnPanel.querySelectorAll(".column-published-at")) publishedAtState.textContent = publishedAt ? new Date(publishedAt).toLocaleDateString() : "不明";
+			CMDrive.updateColumnStates(columnPanel, {
+				title: column.originalFilename,
+				thumbnail: column.hasThumbnail ? CMDrive.changeThumbnailSize(column.thumbnailLink) : CMDrive.changeThumbnailSize(column.iconLink, 256),
+				uploadedAt: column.createdTime,
+				publishedAt: column.properties.publishedAt,
+				usedStudents: column.properties.usedStudents
+			});
 
-			for (const usedByAuthor of columnPanel.querySelectorAll(".column-used-by-author")) {
-				if (usedStudents.indexOf(user.uid) < 0) break;
-
-				usedByAuthor.classList.add("red-text");
-				usedByAuthor.textContent = "済";
-			}
-
-			for (const usedCountState of columnPanel.querySelectorAll(".column-used-count")) usedCountState.textContent = usedStudents.length;
+			drive.appendChild(columnPanel);
+			for (const menuTrigger of columnPanel.querySelectorAll(".dropdown-trigger")) M.Dropdown.init(menuTrigger);
 
 			for (const downloadBtn of columnPanel.querySelectorAll(".column-download")) {
 				downloadBtn.addEventListener("click", () => {
@@ -92,7 +107,7 @@ Promise.all([
 
 						gapi.client.drive.files.get({ fileId, fields: "properties" }).then(
 							resp => {
-								const usedStudents = resp.result.properties.usedStudents.split(" ");
+								const usedStudents = column.properties.usedStudents = resp.result.properties.usedStudents ? resp.result.properties.usedStudents.split(" ") : [];
 								if (usedStudents.indexOf(user.uid) < 0) usedStudents.push(user.uid);
 
 								return gapi.client.drive.files.update({ fileId, properties: { usedStudents: usedStudents.join(" ") } });
@@ -103,7 +118,10 @@ Promise.all([
 								throw error;
 							}
 						).then(
-							() => M.toast({ html: "ダウンロードが完了しました" }),
+							() => {
+								M.toast({ html: "ダウンロードが完了しました" });
+								CMDrive.updateColumnStates(columnPanel, { usedStudents: column.properties.usedStudents });
+							},
 
 							error => {
 								M.toast({ classes: "red", html: "利用状況の更新に失敗しました" });
@@ -113,9 +131,6 @@ Promise.all([
 					});
 				});
 			}
-
-			drive.appendChild(columnPanel);
-			for (const menuTrigger of columnPanel.querySelectorAll(".dropdown-trigger")) M.Dropdown.init(menuTrigger);
 
 			for (const menuDeleteBtn of columnPanel.querySelectorAll(".column-menu--delete")) {
 				menuDeleteBtn.addEventListener("click", () => {
