@@ -1,0 +1,39 @@
+<Head></Head>
+
+<Body>
+	<Div DTL:Name = "Column--Own" Class = "card medium col s12 l4 column column--own" Style = "--column-thumbnail: url(https://lh3.googleusercontent.com/0cFNxetaP0oqzSvBLyDwBdWBYMRk01fC_Pt6DY1YFlVck71BK0I78lpB8PgMznztGQP2ulB3uHs=s800); --column-used-count: '3'">
+		<Div Class = "card-image">
+			<Span Class = "card-title activator column-state--title">国境を超えた日 | どっかのプログラなーいのブログ。</Span>
+		</Div>
+
+		<Div Class = "card-content">
+			<A Class = "card-title dropdown-trigger" Data-Target = "column-menu--abcdefg"><I Class = "material-icons right">more_vert</I></A>
+
+			<UL ID = "column-menu--abcdefg" Class = "dropdown-content">
+				<Li><A Class = "column-menu-delete"><I Class = "material-icons left">delete</I>削除</A></Li>
+			</UL>
+
+			<P>
+				アップロード日時：<Span Class = "column-state--uploaded-at"></Span><Br />
+				自分の利用状況：<Span Class = "column-state--is-used-for-you">未</Span>
+			</P>
+		</Div>
+
+		<Div Class = "card-reveal">
+			<Span Class = "card-title grey-text text-darken-4">詳細情報<I Class = "material-icons right">close</I></Span>
+			
+			<Table Class = "column-properties">
+				<TBody>
+					<Tr><Td>アップロード日時</Td><Td Class = "column-state--uploaded-at"></Td></Tr>
+					<Tr><Td>記事収載日</Td><Td Class = "column-state--published-at"></Td></Tr>
+					<Tr><Td>この記事を利用した人数</Td><Td Class = "column-state--used-count"></Td></Tr>
+				</TBody>
+			</Table>
+		</Div>
+
+		<Div Class = "card-action">
+			<A Class = "btn waves-effect activator"><I Class = "material-icons left">subject</I>詳細</A>
+			<A Class = "btn waves-effect"><I Class = "material-icons left">cloud_download</I>利用する</A>
+		</Div>
+	</Div>
+</Body>
