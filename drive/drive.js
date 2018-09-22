@@ -61,32 +61,36 @@ Promise.all([
 		});
 	}).then(resp => {
 		const columns = resp.result.files;
-		console.info(columns);
 
 		for (const yourColumnsState of yourColumnsStates) yourColumnsState.textContent = columns.length;
 
 		for (const column of columns) {
+			column.properties.usedStudents = column.properties.usedStudents ? column.properties.usedStudents.split(" ") : [];
+
+			const { publishedAt, usedStudents } = column.properties;
+
 			const columnPanel = templates.createComponent("Column--Own", CMDrive.generateUuid(8));
 			columnPanel.style.setProperty("--column-thumbnail", `url(${column.hasThumbnail ? CMDrive.changeThumbnailSize(column.thumbnailLink) : CMDrive.changeThumbnailSize(column.iconLink, 256)})`);
 
-			const columnTitle = columnPanel.querySelectorAll(".column-title");
-			for (const title of columnTitle) title.textContent = column.originalFilename;
+			const columnTitles = columnPanel.querySelectorAll(".column-title");
+			for (const title of columnTitles) title.textContent = column.originalFilename;
 
-			const columnUploadedAt = columnPanel.querySelectorAll(".column-uploaded-at");
-			for (const uploadedAt of columnUploadedAt) uploadedAt.textContent = new Date(column.createdTime).toLocaleDateString();
+			const columnUploadedAtStates = columnPanel.querySelectorAll(".column-uploaded-at");
+			for (const uploadedAtState of columnUploadedAtStates) uploadedAtState.textContent = new Date(column.createdTime).toLocaleDateString();
 
-			const columnPublishedAt = columnPanel.querySelectorAll(".column-published-at");
-			for (const publishedAt of columnPublishedAt) publishedAt.textContent = column.properties.publishedAt ? new Date(column.properties.publishedAt).toLocaleDateString() : "";
+			const columnPublishedAtStates = columnPanel.querySelectorAll(".column-published-at");
+			for (const publishedAtState of columnPublishedAtStates) publishedAtState.textContent = publishedAt ? new Date(publishedAt).toLocaleDateString() : "";
 
-			const columnUsedCount = columnPanel.querySelectorAll(".column-used-count");
-			for (const usedCount of columnUsedCount) {
+			const columnUsedByAuthors = columnPanel.querySelectorAll(".column-used-by-author");
+			for (const usedByAuthor of columnUsedByAuthors) usedByAuthor.textContent = usedStudents.indexOf(user.uid) > -1 ? "済" : "未";
 
-			}
-			
-			const columnMenuTrigger = columnPanel.querySelectorAll(".dropdown-trigger");
+			const columnUsedCountStates = columnPanel.querySelectorAll(".column-used-count");
+			for (const usedCountState of columnUsedCountStates) usedCountState.textContent = usedStudents.length;
+
+			const columnMenuTriggers = columnPanel.querySelectorAll(".dropdown-trigger");
 
 			drive.appendChild(columnPanel);
-			for (const menuTrigger of columnMenuTrigger) M.Dropdown.init(menuTrigger);
+			for (const menuTrigger of columnMenuTriggers) M.Dropdown.init(menuTrigger);
 		}
 	});
 });
