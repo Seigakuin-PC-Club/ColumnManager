@@ -69,28 +69,35 @@ Promise.all([
 
 			const { publishedAt, usedStudents } = column.properties;
 
-			const columnPanel = templates.createComponent("Column--Own", CMDrive.generateUuid(8));
+			const columnPanel = templates.createComponent("Column--Own", column.id, CMDrive.generateUuid(8));
 			columnPanel.style.setProperty("--column-thumbnail", `url(${column.hasThumbnail ? CMDrive.changeThumbnailSize(column.thumbnailLink) : CMDrive.changeThumbnailSize(column.iconLink, 256)})`);
 
-			const columnTitles = columnPanel.querySelectorAll(".column-title");
-			for (const title of columnTitles) title.textContent = column.originalFilename;
-
-			const columnUploadedAtStates = columnPanel.querySelectorAll(".column-uploaded-at");
-			for (const uploadedAtState of columnUploadedAtStates) uploadedAtState.textContent = new Date(column.createdTime).toLocaleDateString();
-
-			const columnPublishedAtStates = columnPanel.querySelectorAll(".column-published-at");
-			for (const publishedAtState of columnPublishedAtStates) publishedAtState.textContent = publishedAt ? new Date(publishedAt).toLocaleDateString() : "";
-
-			const columnUsedByAuthors = columnPanel.querySelectorAll(".column-used-by-author");
-			for (const usedByAuthor of columnUsedByAuthors) usedByAuthor.textContent = usedStudents.indexOf(user.uid) > -1 ? "済" : "未";
-
-			const columnUsedCountStates = columnPanel.querySelectorAll(".column-used-count");
-			for (const usedCountState of columnUsedCountStates) usedCountState.textContent = usedStudents.length;
-
-			const columnMenuTriggers = columnPanel.querySelectorAll(".dropdown-trigger");
+			for (const title of columnPanel.querySelectorAll(".column-title")) title.textContent = column.originalFilename;
+			for (const uploadedAtState of columnPanel.querySelectorAll(".column-uploaded-at")) uploadedAtState.textContent = new Date(column.createdTime).toLocaleDateString();
+			for (const publishedAtState of columnPanel.querySelectorAll(".column-published-at")) publishedAtState.textContent = publishedAt ? new Date(publishedAt).toLocaleDateString() : "不明";
+			for (const usedByAuthor of columnPanel.querySelectorAll(".column-used-by-author")) usedByAuthor.textContent = usedStudents.indexOf(user.uid) > -1 ? "済" : "未";
+			for (const usedCountState of columnPanel.querySelectorAll(".column-used-count")) usedCountState.textContent = usedStudents.length;
 
 			drive.appendChild(columnPanel);
-			for (const menuTrigger of columnMenuTriggers) M.Dropdown.init(menuTrigger);
+			for (const menuTrigger of columnPanel.querySelectorAll(".dropdown-trigger")) M.Dropdown.init(menuTrigger);
+
+			for (const menuDeleteBtn of columnPanel.querySelectorAll(".column-menu--delete")) {
+				menuDeleteBtn.addEventListener("click", () => {
+					gapi.client.drive.files.delete({ fileId: columnPanel.dataset.columnId }).then(
+						() => {
+							M.toast({ html: "コラムの削除に成功しました" });
+							
+							columnPanel.remove();
+							for (const yourColumnsState of yourColumnsStates) yourColumnsState.textContent = yourColumnsState.textContent - 1;
+						},
+
+						error => {
+							M.toast({ classes: "red", html: "コラムの削除に失敗しました" });
+							throw error;
+						}
+					);
+				});
+			}
 		}
 	});
 });
