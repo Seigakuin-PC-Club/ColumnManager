@@ -15,15 +15,15 @@ const drawer = document.querySelector("#drawer");
 // メソッド定義
 
 const MESSAGES = {
+	State_isNetworkConnected: {
+		true: { short: "接続済み", long: "接続されています" },
+		false: { short: "未接続", long: "ネットワークに接続されていません" },
+	},
+
 	UserState_isSignedIn: {
 		true: { short: "Sign out", long: "ログインされています" },
 		false: { short: "Sign in", long: "ログインされていません" },
 	},
-
-	isNetworkConnected: {
-		true: { short: "接続済み", long: "接続されています" },
-		false: { short: "未接続", long: "ネットワークに接続されていません" },
-	}
 };
 
 class CMCommon {
@@ -80,7 +80,7 @@ class CMCommon {
 		}
 
 		if (isSignedIn === null) {
-			for (const name of userNameStates) name.textContent = MESSAGES.isNetworkConnected.false.long;
+			for (const name of userNameStates) name.textContent = MESSAGES.State_isNetworkConnected.false.long;
 			return;
 		}
 
@@ -147,6 +147,9 @@ let user = null;
 window.addEventListener("DOMContentLoaded", () => {
 	const selects = document.querySelectorAll("Select");
 	for (const select of selects) M.FormSelect.init(select);
+
+	const dropdowns = document.querySelectorAll(".dropdown-trigger");
+	for (const dropdown of dropdowns) M.Dropdown.init(dropdown);
 	
 	const sidenavs = document.querySelectorAll(".sidenav");
 	for (const sidenav of sidenavs) M.Sidenav.init(sidenav);

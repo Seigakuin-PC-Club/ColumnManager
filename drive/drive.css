@@ -95,4 +95,21 @@ Article:first-child {
   display: none;
 }
 
+.column .card-image {
+  height: inherit;
+  background: none center / cover;
+  background-image: var(--column-thumbnail, transparent);
+}
+.column .card-image::before {
+  content: "";
+  position: absolute;
+  display: block;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5);
+}
+.column .column-state--used-count::before {
+  content: var(--column-used-count);
+}
+
 /*# sourceMappingURL=drive.css.map */
