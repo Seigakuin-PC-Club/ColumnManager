@@ -1,0 +1,22 @@
+@charset "UTF-8";
+
+
+
+.column {
+	.card-image {
+		height: inherit;
+		background: none center / cover;
+		background-image: var(--column-thumbnail, transparent);
+
+		&::before {
+			content: "";
+
+			position: absolute;
+			display: block;
+			width: 100%;
+			height: 100%;
+
+			background: rgba(0, 0, 0, 0.5);
+		}
+	}
+}

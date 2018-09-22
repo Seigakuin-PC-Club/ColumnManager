@@ -1,0 +1,75 @@
+<Head></Head>
+
+<Body>
+	<Div DTL:Name = "Column" Class = "column column--own card medium col s12 l4" Data-Column-ID = "${0}">
+		<Div Class = "card-image">
+			<Span Class = "column-title card-title activator">Untitled</Span>
+		</Div>
+
+		<Div Class = "card-content">
+			<A Class = "card-title dropdown-trigger" Data-Target = "column-menu--${1}"><I Class = "material-icons right">more_vert</I></A>
+
+			<UL ID = "column-menu--${1}" Class = "dropdown-content">
+				<Li><A Class = "column-menu--delete red-text"><I Class = "material-icons left">delete</I>削除</A></Li>
+			</UL>
+
+			<P>
+				アップロード日：<Span Class = "column-uploaded-at">2018/1/1</Span><Br />
+				自分の利用状況：<Span Class = "column-used-by-author">未</Span>
+			</P>
+		</Div>
+
+		<Div Class = "card-reveal">
+			<Span Class = "card-title grey-text text-darken-4">詳細情報<I Class = "material-icons right">close</I></Span>
+			
+			<Table Class = "column-properties">
+				<TBody>
+					<Tr><Td>アップロード日</Td><Td Class = "column-uploaded-at">2018/1/1</Td></Tr>
+					<Tr><Td>記事収載日</Td><Td Class = "column-published-at">不明</Td></Tr>
+					<Tr><Td>利用人数</Td><Td Class = "column-used-count">0</Td></Tr>
+				</TBody>
+			</Table>
+		</Div>
+
+		<Div Class = "card-action">
+			<A Class = "btn waves-effect activator"><I Class = "material-icons left">subject</I>詳細</A>
+			<A Class = "column-download btn waves-effect"><I Class = "material-icons left">cloud_download</I>利用する</A>
+		</Div>
+	</Div>
+	
+	<Div DTL:Name = "Column--Own" Class = "column column--own card medium col s12 l4" Data-Column-ID = "${0}">
+		<Div Class = "card-image">
+			<Span Class = "column-title card-title activator">Untitled</Span>
+		</Div>
+
+		<Div Class = "card-content">
+			<A Class = "card-title dropdown-trigger" Data-Target = "column-menu--${1}"><I Class = "material-icons right">more_vert</I></A>
+
+			<UL ID = "column-menu--${1}" Class = "dropdown-content">
+				<Li><A Class = "column-menu--delete red-text"><I Class = "material-icons left">delete</I>削除</A></Li>
+			</UL>
+
+			<P>
+				アップロード日：<Span Class = "column-uploaded-at">2018/1/1</Span><Br />
+				自分の利用状況：<Span Class = "column-used-by-author">未</Span>
+			</P>
+		</Div>
+
+		<Div Class = "card-reveal">
+			<Span Class = "card-title grey-text text-darken-4">詳細情報<I Class = "material-icons right">close</I></Span>
+			
+			<Table Class = "column-properties">
+				<TBody>
+					<Tr><Td>アップロード日</Td><Td Class = "column-uploaded-at">2018/1/1</Td></Tr>
+					<Tr><Td>記事収載日</Td><Td Class = "column-published-at">不明</Td></Tr>
+					<Tr><Td>利用人数</Td><Td Class = "column-used-count">0</Td></Tr>
+				</TBody>
+			</Table>
+		</Div>
+
+		<Div Class = "card-action">
+			<A Class = "btn waves-effect activator"><I Class = "material-icons left">subject</I>詳細</A>
+			<A Class = "column-download btn waves-effect"><I Class = "material-icons left">cloud_download</I>利用する</A>
+		</Div>
+	</Div>
+</Body>

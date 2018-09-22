@@ -64,7 +64,7 @@ const CMDrive = (() => {
 
 // 定数定義
 
-const templates = new TemplateLoader("./../libs/templates/Drive.html");
+const templates = new TemplateLoader("./../libs/templates/Column.html");
 
 
 
