@@ -30,6 +30,12 @@ const CMDrive = (() => {
 			if (this.FILETYPE_THUMBNAIL_MATCHER.test(url)) return url.replace(url.match(this.FILETYPE_THUMBNAIL_MATCHER)[1], size || "16");
 		}
 
+		/**
+		 * コラムの状態に基づいて代入します
+		 * 
+		 * @param {HTMLElement} column コラム要素
+		 * @param {ColumnStates} states
+		 */
 		static updateColumnStates (column, states) {
 			if (!states) return;
 
@@ -59,6 +65,15 @@ const CMDrive = (() => {
 
 	return CMDrive;
 })();
+
+/**
+ * @typedef {Object} ColumnStates
+ * @prop {String} title
+ * @prop {String} thumbnail
+ * @prop {String} uploadedAt
+ * @prop {String} publishedAt
+ * @prop {Array<String>} usedStudents
+ */
 
 
 
