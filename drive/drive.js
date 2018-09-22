@@ -63,7 +63,6 @@ Promise.all([
 		const columns = resp.result.files;
 
 		for (const yourColumnsState of yourColumnsStates) yourColumnsState.textContent = columns.length;
-
 		for (const column of columns) {
 			column.properties.usedStudents = column.properties.usedStudents ? column.properties.usedStudents.split(" ") : [];
 
@@ -75,8 +74,45 @@ Promise.all([
 			for (const title of columnPanel.querySelectorAll(".column-title")) title.textContent = column.originalFilename;
 			for (const uploadedAtState of columnPanel.querySelectorAll(".column-uploaded-at")) uploadedAtState.textContent = new Date(column.createdTime).toLocaleDateString();
 			for (const publishedAtState of columnPanel.querySelectorAll(".column-published-at")) publishedAtState.textContent = publishedAt ? new Date(publishedAt).toLocaleDateString() : "不明";
-			for (const usedByAuthor of columnPanel.querySelectorAll(".column-used-by-author")) usedByAuthor.textContent = usedStudents.indexOf(user.uid) > -1 ? "済" : "未";
+
+			for (const usedByAuthor of columnPanel.querySelectorAll(".column-used-by-author")) {
+				if (usedStudents.indexOf(user.uid) < 0) break;
+
+				usedByAuthor.classList.add("red-text");
+				usedByAuthor.textContent = "済";
+			}
+
 			for (const usedCountState of columnPanel.querySelectorAll(".column-used-count")) usedCountState.textContent = usedStudents.length;
+
+			for (const downloadBtn of columnPanel.querySelectorAll(".column-download")) {
+				downloadBtn.addEventListener("click", () => {
+					const dlWindow = window.open(column.webContentLink, "download");
+					dlWindow.addEventListener("unload", () => {
+						const fileId = columnPanel.dataset.columnId;
+
+						gapi.client.drive.files.get({ fileId, fields: "properties" }).then(
+							resp => {
+								const usedStudents = resp.result.properties.usedStudents.split(" ");
+								if (usedStudents.indexOf(user.uid) < 0) usedStudents.push(user.uid);
+
+								return gapi.client.drive.files.update({ fileId, properties: { usedStudents: usedStudents.join(" ") } });
+							},
+
+							error => {
+								M.toast({ classes: "red", html: "ダウンロードに失敗しました" });
+								throw error;
+							}
+						).then(
+							() => M.toast({ html: "ダウンロードが完了しました" }),
+
+							error => {
+								M.toast({ classes: "red", html: "利用状況の更新に失敗しました" });
+								throw error;
+							}
+						);
+					});
+				});
+			}
 
 			drive.appendChild(columnPanel);
 			for (const menuTrigger of columnPanel.querySelectorAll(".dropdown-trigger")) M.Dropdown.init(menuTrigger);
@@ -86,7 +122,7 @@ Promise.all([
 					gapi.client.drive.files.delete({ fileId: columnPanel.dataset.columnId }).then(
 						() => {
 							M.toast({ html: "コラムの削除に成功しました" });
-							
+
 							columnPanel.remove();
 							for (const yourColumnsState of yourColumnsStates) yourColumnsState.textContent = yourColumnsState.textContent - 1;
 						},
