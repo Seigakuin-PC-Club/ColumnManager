@@ -1,18 +1,12 @@
 <Head></Head>
 
 <Body>
-	<Div DTL:Name = "Column" Class = "column column--own card medium col s12 l4" Data-Column-ID = "${0}">
+	<Div DTL:Name = "Column" Class = "column card medium col s12 l4" Data-Column-ID = "${0}">
 		<Div Class = "card-image">
 			<Span Class = "column-title card-title activator">Untitled</Span>
 		</Div>
 
 		<Div Class = "card-content">
-			<A Class = "card-title dropdown-trigger" Data-Target = "column-menu--${1}"><I Class = "material-icons right">more_vert</I></A>
-
-			<UL ID = "column-menu--${1}" Class = "dropdown-content">
-				<Li><A Class = "column-menu--delete red-text"><I Class = "material-icons left">delete</I>削除</A></Li>
-			</UL>
-
 			<P>
 				アップロード日：<Span Class = "column-uploaded-at">2018/1/1</Span><Br />
 				自分の利用状況：<Span Class = "column-used-by-author">未</Span>
