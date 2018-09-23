@@ -57,7 +57,8 @@ Footer.page-footer .footer-copyright .author {
 }
 
 ::-webkit-scrollbar {
-  width: 12px;
+  width: 8px;
+  height: 8px;
 }
 
 ::-webkit-scrollbar-thumb {
