@@ -15,6 +15,16 @@
 		<Script Src = "./../libs/TemplateLoader.js"></Script>
 		<Script Src = "./../libs/common.js" Defer Data-Auth-Required></Script>
 		<Script Src = "./drive.js" Defer></Script>
+
+		<!-- Global site tag (gtag.js) - Google Analytics -->
+		<Script Src = "https://www.googletagmanager.com/gtag/js?id=UA-126257647-1" Async></Script>
+		<Script>
+			window.dataLayer = window.dataLayer || [];
+			function gtag(){ dataLayer.push(arguments) }
+			gtag('js', new Date());
+
+			gtag('config', 'UA-126257647-1');
+		</Script>
 	</Head>
 	
 	<Body>

@@ -13,6 +13,16 @@
 		<Script Src = "./libs/materialize/materialize.min.js"></Script>
 		<Script Src = "https://apis.google.com/js/api.js"></Script>
 		<Script Src = "./libs/common.js" Defer></Script>
+
+		<!-- Global site tag (gtag.js) - Google Analytics -->
+		<Script Src = "https://www.googletagmanager.com/gtag/js?id=UA-126257647-1" Async></Script>
+		<Script>
+			window.dataLayer = window.dataLayer || [];
+			function gtag(){ dataLayer.push(arguments) }
+			gtag('js', new Date());
+
+			gtag('config', 'UA-126257647-1');
+		</Script>
 	</Head>
 	
 	<Body>
